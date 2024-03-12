@@ -1,0 +1,129 @@
+Microsoft Windows [Version 10.0.22631.3155]
+(c) Microsoft Corporation. All rights reserved.
+
+D:\Upcode\Workspace\git-practice>git clone git@github.com:jifanajaleel/git-practice-1.git
+Cloning into 'git-practice-1'...
+The authenticity of host 'github.com (20.207.73.82)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+
+D:\Upcode\Workspace\git-practice>more git-practice-01
+Cannot access file D:\Upcode\Workspace\git-practice\git-practice-01
+
+D:\Upcode\Workspace\git-practice>more git-practice-1
+Cannot access file D:\Upcode\Workspace\git-practice\git-practice-1
+
+D:\Upcode\Workspace\git-practice>cd git-practice-1
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git log
+commit bc3e5ce0107d2c199dbfb58fcbf9178b941c6a52 (HEAD -> main, origin/main, origin/HEAD)
+Author: jifanajaleel <156309911+jifanajaleel@users.noreply.github.com>
+Date:   Tue Mar 12 14:34:25 2024 +0530
+
+    Initial commit
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git switch -c homepage
+Switched to a new branch 'homepage'
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git add index.html
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git commit -m "started home page design"
+[homepage 19c9299] started home page design
+ 1 file changed, 6 insertions(+)
+ create mode 100644 index.html
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git log
+commit 19c9299819e9b6191780b7fb4a3f2353337e75bc (HEAD -> homepage)
+Author: Jifana <jifanajaleel@gmail.com>
+Date:   Tue Mar 12 15:06:51 2024 +0530
+
+    started home page design
+
+commit bc3e5ce0107d2c199dbfb58fcbf9178b941c6a52 (origin/main, origin/HEAD, main)
+Author: jifanajaleel <156309911+jifanajaleel@users.noreply.github.com>
+Date:   Tue Mar 12 14:34:25 2024 +0530
+
+    Initial commit
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git status
+On branch homepage
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   index.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        images/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git add images index.html
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git commit -m "logo added into homepage"
+[homepage fbccaad] logo added into homepage
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+ create mode 100644 images/pic.png
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git log
+commit fbccaad4a8141508bf8d60ce87384d9f965d098f (HEAD -> homepage)
+Author: Jifana <jifanajaleel@gmail.com>
+Date:   Tue Mar 12 15:10:50 2024 +0530
+
+    logo added into homepage
+
+commit 19c9299819e9b6191780b7fb4a3f2353337e75bc
+Author: Jifana <jifanajaleel@gmail.com>
+Date:   Tue Mar 12 15:06:51 2024 +0530
+
+    started home page design
+
+commit bc3e5ce0107d2c199dbfb58fcbf9178b941c6a52 (origin/main, origin/HEAD, main)
+Author: jifanajaleel <156309911+jifanajaleel@users.noreply.github.com>
+Date:   Tue Mar 12 14:34:25 2024 +0530
+
+    Initial commit
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git status
+On branch homepage
+nothing to commit, working tree clean
+
+D:\Upcode\Workspace\git-practice\git-practice-1>git push origin homepage
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (8/8), 39.11 KiB | 482.00 KiB/s, done.
+Total 8 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+remote:
+remote: Create a pull request for 'homepage' on GitHub by visiting:
+remote:      https://github.com/jifanajaleel/git-practice-1/pull/new/homepage
+remote:
+To github.com:jifanajaleel/git-practice-1.git
+ * [new branch]      homepage -> homepage
+
+D:\Upcode\Workspace\git-practice\git-practice-1>
