@@ -26,12 +26,12 @@
             var token = localStorage.getItem("authToken");
             console.log("token:", token);
             var response = await fetch("https://fakestoreapi.com/products", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + token  //! Bearer means “the holder of this token is allowed access”. Whoever bears (has) the token can use the API
-                    },  //! The server will decode the token (along with the key/password the server used while token creation) and validate if the user has the permission for the request. If yes, server will serve the data. Otherwise, server will send unauthorization error
-                    body: JSON.stringify(prd)
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token  //! Bearer means “the holder of this token is allowed access”. Whoever bears (has) the token can use the API
+                },  //! The server will decode the token (along with the key/password the server used while token creation) and validate if the user has the permission for the request. If yes, server will serve the data. Otherwise, server will send unauthorization error
+                body: JSON.stringify(prd)
             });
             var data = response.json();
             console.log("Created:", data);
@@ -48,11 +48,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    username: "kminchelle",
-                    password: "0lelplR"
-                })
-                // body: JSON.stringify(payload)
+                body: JSON.stringify(payload)
             });
             if (response.status == 200) {
                 var data = await response.json();
