@@ -1,7 +1,8 @@
 <html>
     <body>
-        <div class="products"></div>
-        <script>
+        <div class="products"></div>  <!--This is an empty container.Products fetched from the API will be inserted here dynamically using JS-->
+        <script>   //! Everything inside <script> is JavaScript
+
             /* *********************** CALLING API FROM BROWSER USING FETCH **************************** */
             //! Use postman first to get to know about 4 HTTP methods - GET, DELETE, POST, PUT
 
@@ -10,13 +11,14 @@
                 var productResponse = await fetch("https://fakestoreapi.com/products", {
                     method: "GET"
                 });
-                var data = await productResponse.json();  //! API response comes as JSON string(text). array of (product) objects. This productResponse.json() converts JSON string → JS object
-                console.log("GET data:", data);
+                var data = await productResponse.json();  //! API response comes as JSON string(text). This productResponse.json() converts JSON string → JS object. data is now array of (product) objects 
+                console.log("data array from GET method:", data);
+                console.log("First element from data array:", data[0]);
                 var prodsElList = document.getElementsByClassName("products");  //! getElementsByClassName returns a list
-                console.log("length of prodsElList:", prodsElList.length);
-                var prodsEl = prodsElList[0];
+                console.log("length of prodsElList:", prodsElList.length);  //! Confirms how many elements with class products exist
+                var prodsEl = prodsElList[0];  //! Since there is only one products div, we access index 0
                 console.log("prodsEl:", prodsEl);
-                var prodCards = "";
+                var prodCards = "";  //! prodCards variable will store HTML as a string
                 for(var prod of data) {
                     prodCards = prodCards + '<div>' + '<h2>' + prod.title + '</h2><img height="100px" src="' + prod.image + '"/>' + '</div>';
                 }
@@ -34,20 +36,24 @@
                     "image": "https://i.pravatar.cc",
                     "category": "electronics"
                 };
-                var prd_str = JSON.stringify(prd);  //! To convert JS object to JSON string. This conversion is needed to send data to API
+                var prd_str = JSON.stringify(prd);  //! To convert JS object to JSON string. This conversion is needed to send the data to API
                 // var prd_obj = JSON.parse(prd_str);  //! To convert JSON string to JS object
+
+                // JSON.parse() → converts a JSON string into a JS object &
+                // .json() → reads a fetch response and converts it into a JS object
+                
                 //! JS Object → Editable form & JSON String → Printed document
                 //! json eg -> {"id":1,"title":"Laptop"} & js eg -> {id: 1, title: "Laptop"}
                 var response = await fetch("https://fakestoreapi.com/products", {  //! In the api url, '/products/1' cannot be provided as POST will automatically add the data as a new element
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": "jiajdoemc"  //! Authorization is provided as a header . It's value is JWT (here jiajdoemc is JWT)
+                        "Authorization": "jiajdoemc"  //! Authorization is provided as a header . It's value is JWT (here jiajdoemc is JWT just an example)
                     },
                     body: prd_str
                 })
                 var data = await response.json();
-                console.log("POST data:", data)
+                console.log("POST data:", data);
             }
             createProd();
             
