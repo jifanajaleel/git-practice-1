@@ -6,7 +6,7 @@
       console.warn("This is used to show warning");
       console.error("This is an error");
 
-      //! primary datatypes in js - number, string, boolean, function, object
+      //! primary datatypes in js - number, string, boolean, date, function, object, array (number, string, boolean, date are primitive datatypes)
 
       /* *************** LET DECLARATION ****************** */
       //! let - A let variable works only inside the nearest { ... } block. Eg:
@@ -45,23 +45,35 @@
       document.write(sum); //! to write inside the Body of webpage
       //alert(sum);
 
-      //! String datatype
-      //! String concatenation
+      //! STRING DATATYPE
+      //! STRING CONCATENATION
       var company = "Upcode";
       company = "Upcode company";
-      var message = "Welcome to " + company;
+      var message = "Welcome to " + company;  //! Always remember that RHS is calculated first and then it's assigned to LHS
       console.log(message);
       //! String concatenation with number
       str_int = company + 100;
       console.log(str_int);
 
-      //! Boolean datatype - true or false. Can be used along with && and ||
+      //! TEMPLATE STRING
+      //! String concatenation is an older way. Template string is a modern JS way to create strings easily, especially when you want to insert variables or expressions
+      //! let, const, template string & arrow function were introduced after ECMA released ES2015
+      let company_name = "Upcode company";
+      let address = "Kannur, Kerala";
+      let text_message = `Welcome to ${company_name} ${address}`;
+      console.log("Template string eg:", text_message);
+
+      let a1 = 10;
+      let b1 = 20;
+      console.log("Another template string eg:", `Sum is ${a1 + b1}`);
+
+      //! BOOLEAN DATATYPE - true or false. Can be used along with && and ||
       var passedWrittenExam = true;
       var passedPracticalExam = false;
       var eligibleForPromotion = passedWrittenExam && passedPracticalExam;
       console.log("eligibleForPromotion:", eligibleForPromotion);
 
-      //! Date datatype
+      //! DATE DATATYPE
       var todayDate = new Date();
       console.log("Today's date is", todayDate);
       var birthDate = new Date(2000, 2, 5, 6); //! year, month, day, time
@@ -79,7 +91,48 @@
       var f1 = addTwoNumber(30, 70);
       console.log("addTwoNumber function output is", f1);
 
-      //! function without return eg:
+      //! another way to define function. Here, a 'let' named 'addTwoNumbers' is used to store the function addTwoNumbers. This method & above method are exactly same
+      let addTwoNumber2 = function(x, y) {
+        var sum = x + y;
+        return sum;
+      }     
+      var f2 = addTwoNumber2(300, 700);
+      console.log("addTwoNumber2 function output is", f2);
+
+      //! ARROW FUNCTION
+      //! another way to define function. It uses arrows to denote that it's a function. Arrow function was introduced after ES2015
+      let addTwoNumber3 = (x, y) => {
+        var sum = x + y;
+        return sum;
+      }
+      var f3 = addTwoNumber3(3000, 7000);
+      console.log("addTwoNumber3 function output is", f3);
+
+      //! The exact same arrow function can be defined in one line also
+      let addTwoNumber4 = (x, y) => x + y;
+      var f4 = addTwoNumber4(30000, 70000);
+      console.log("addTwoNumber4 function output is", f4);
+
+      //! ARROW FUNCTION WITHOUT PARAMETERS
+      let greets = () => console.log("Welcome to greets function");
+      greets();
+
+      //! DEFAULT PARAMETERS IN JS FUNCTION
+      //! This logic can be used in any kind of functions like arrow function
+      function printMessage(message = "Demo message") {  //! default parameter
+        console.log(message);
+      }
+      printMessage("Welcome to printMessage function");
+      printMessage();
+
+      //! DEFAULT PARAMETERS IN ARROW FUNCTION
+      var printMessage = (message = "Demo message from arrow", symbol = "!!!") => {
+        console.log(message, symbol);
+      }
+      printMessage("Welcome to printMessage function from arrow");
+      printMessage();
+
+      //! FUNCTION WITHOUT RETURN eg:
       function greet(name) {
         console.log("Hai " + name);
       }
@@ -102,7 +155,7 @@
         age: 32,
         paidFees: true,
         greet: function () {
-          //! Funcion in an object is called method
+          //! Funcion in an object is called METHOD
           console.log("Hello " + this.name);
         },
       };
@@ -111,6 +164,29 @@
       console.log("address of s1:", s1.address);
       console.log("type of s1:", typeof s1);
       s1.greet();
+
+      /* *************** VALUE TYPE & REFERENCE TYPE ******************** */
+
+      //! VALUE TYPE
+      //! For primitive data types, we can update the variable value after copying. For objects, we can't do this. You will get to know more in the coming examples
+      //! Primitive datatypes are of VALUE TYPE
+      var og_name = "Jifana";
+      var pet_name = og_name;
+      pet_name = "Jifa";
+      console.log(og_name, pet_name);
+
+      //! REFERENCE TYPE
+      //! Another object example
+      //! Object & array are of REFERENCE TYPE
+      var weeklymeeting1 = {
+        date: "31-12-2022",
+        topic: "Weekly meeting",
+        members: []
+      }    
+      var weeklymeeting2 = weeklymeeting1;  //! Now I created another object same as weeklymeeting1, only date should be updated
+      weeklymeeting2.date = "07-01-2023";
+      console.log("Weekly meeting objects:");
+      console.log(weeklymeeting1, weeklymeeting2);  //! date of both weeklymeeting1 & weeklymeeting2 got updated, unlike primitive datatype
 
       //! console is an object & log, warn, error are functions. lly, document is also an object
 
@@ -121,7 +197,7 @@
       // document.body.style.backgroundColor = "yellow";
       // document.body.style.display = "none";
 
-      /* *************** Array ******************** */
+      /* *************** ARRAY ******************** */
       var topScores = [1002, 8456, 4332, 6673]; // number array
       var topScorerNames = ["Anu", "Basil", "Cilin", "Dona"]; // string array
       //! To fetch array elements
@@ -156,7 +232,7 @@
 
       //! Check the scipt at the bottom of body section - Find an element from document
 
-      /* *************** Conditions in js ******************** */
+      /* *************** CONDITIONS IN JS ******************** */
         var maxScore = 50;
         var cutOff = 25;
         var finalScore = 45;
@@ -205,7 +281,7 @@
     </div>
     This is in body
     <script>
-      /* *************** Find an element from document ******************** */
+      /* *************** FIND an ELEMENT FROM DOCUMENT ******************** */
       //! This code has been added in here because btnAdd cannot be identified from above script area since the declaration is happening after the script area, inside div
       var btn = document.getElementById("btnAdd");
       btn.style.color = "blue";
