@@ -33,7 +33,7 @@
                 },  //! The server will decode the token (along with the key/password the server used while token creation) and validate if the user has the permission for the request. If yes, server will serve the data. Otherwise, server will send unauthorization error
                 body: JSON.stringify(prd)
             });
-            var data = response.json();
+            var data = await response.json();
             console.log("Created:", data);
         }
         async function login() {
@@ -53,13 +53,13 @@
             if (response.status == 200) {
                 var data = await response.json();
                 console.log("Success");
+                // console.log(response, data);
                 localStorage.setItem("authToken", data.token);  //! sessionStorage can be set exactly like this
                 // var token = localStorage.getItem("authToken");  //! This is just an example for getItem usage. sessionStorage can be set exactly like this
-                document.cookie = "authToken=" + data.token + "; expires=Thus, 15 Dec 2030 12:00:00 UTC";
+                document.cookie = "authToken=" + data.token + "; expires=Thu, 15 Dec 2030 12:00:00 UTC";
             } else {
                 document.getElementById("errorMessage").innerText = "Invalid credentials";
-            };
-            console.log(response, data);
+            };         
         }
     </script>
   </body>
