@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <header></header>
+    Username: <input type="text" id="username" /><br />
+    Password: <input type="password" id="password" /><br />
+    <label style="color: red;" id="errorMessage"></label><br />
+    <button onclick="login()">Login</button>
+    <hr>
+    <button onclick="createProd()">Create product</button>
+    <footer></footer>
+    <script>
+        var cookies = document.cookie;
+        console.log("cookies:", cookies);
+
+        //! After logging in (here, using login function)(authentication done), we will get a token. In the coming requests/api calls (here createProd function), the token needs to be sent for authorization
+        async function createProd() {
+            var prd = {
+                "title": "Adidas Sports Shoe",
+                "price": 4500,
+                "description": "lorem ipsum set",
+                "image": "https://i.pravatar.cc",
+                "category": "electronic"
+            };
+            var token = localStorage.getItem("authToken");
+            console.log("token:", token);
+            var response = await fetch("https://fakestoreapi.com/products", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + token  //! Bearer means “the holder of this token is allowed access”. Whoever bears (has) the token can use the API
+                    },  //! The server will decode the token (along with the key/password the server used while token creation) and validate if the user has the permission for the request. If yes, server will serve the data. Otherwise, server will send unauthorization error
+                    body: JSON.stringify(prd)
+            });
+            var data = response.json();
+            console.log("Created:", data);
+        }
+        async function login() {
+            localStorage.removeItem("authToken");  //! sessionStorage can be removed exactly like this
+            var payload = {
+                username: document.getElementById("username").value.trim(),  //! kminchelle
+                password: document.getElementById("password").value.trim()  //! 0lelplR            
+            }
+            console.log(JSON.stringify(payload))
+            var response = await fetch('https://dummyjson.com/auth/login',{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: "kminchelle",
+                    password: "0lelplR"
+                })
+                // body: JSON.stringify(payload)
+            });
+            if (response.status == 200) {
+                var data = await response.json();
+                console.log("Success");
+                localStorage.setItem("authToken", data.token);  //! sessionStorage can be set exactly like this
+                // var token = localStorage.getItem("authToken");  //! This is just an example for getItem usage. sessionStorage can be set exactly like this
+                document.cookie = "authToken=" + data.token + "; expires=Thus, 15 Dec 2030 12:00:00 UTC";
+            } else {
+                document.getElementById("errorMessage").innerText = "Invalid credentials";
+            };
+            console.log(response, data);
+        }
+    </script>
+  </body>
+</html>

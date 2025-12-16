@@ -1,0 +1,153 @@
+<html>
+  <head></head>
+  <body>
+    <header></header>
+    <div>
+      <span>
+        <!--CONDITIONS IN JS-->
+        Score: <input type="text" id="score" /><br />
+        Place: <input type="text" id="place" /><br />
+        Qualification: <input type="text" id="qualification" /><br />
+        <input type="button" onclick="validate()" value="Validate" />
+        <h1 id="result"></h1>
+        Number: <input type="text" id="number" /><br />
+        <button onclick="sumNumbers()" id="btnAdd">Sum numbers</button>
+        <label id="sum"></label>
+      </span>
+    </div>
+    <footer></footer>
+    <script>
+      /* *************** CODE REFACTORING ******************** */
+      function showMessage(message, color = "gray") {
+        document.getElementById("result").innerText = message;
+        document.getElementById("result").style.color = color;
+      }
+      function validate() {
+        var score = parseInt(document.getElementById("score").value);
+        var place = document.getElementById("place").value;
+        var qualification = document.getElementById("qualification").value;
+
+        var cutOffScore = 25;
+        var maxScore = 50;
+
+        if (
+          (score >= cutOffScore || qualification == "mba") &&
+          place == "kozhikode"
+        ) {
+          showMessage("You are eligible to apply for job", "green");
+        } else if (qualification === "phd") {
+          showMessage("You are eligible to apply for job");
+        } else {
+          showMessage("Sorry, you are not eligible to apply for job", "orange");
+        }
+      }
+
+      /* *************** GLOBAL VARIABLE & LOCAL VARIABLE ******************** */
+      var sum = 0; //! global variable
+      function sumNumbers() {
+        var n1 = parseInt(document.getElementById("number").value); //! local variable
+        sum = sum + n1;
+        document.getElementById("sum").innerText = "Sum is : " + sum;
+      }
+
+      /* ********************* TERNARY OPERATION ************************ */
+      var eligible = true;
+      var message = eligible ? "Congrats" : "Sorry, try again"; //! if eligible is true, "Congrats" should be printed. Else "Sorry, try again" should be printed
+      console.log(message);
+
+      /* ******************** SWITCH CASE ************************* */
+      //! switch is an alternative for if-else if-else condition
+      var country = "India";
+      var phoneCode;
+      switch (country) {
+        case "India":
+          phoneCode = "+91";
+          break;
+        case "Pakistan":
+          phoneCode = "+92";
+          break;
+        default:
+          phoneCode = "";
+      }
+
+      //! switch case without break. It is used only intentionally, not common
+      let day = 5;
+      switch (day) {
+        case 5:
+        case 6:
+        case 7:
+          console.log("Weekend");
+          break;
+        default:
+          console.log("Weekday");
+      }
+
+      /* *********************** FOR LOOP **************************** */
+      var expense = [100, 500, 500, 50, 200];
+      var count = expense.length;
+      var sum = 0;
+      for (var i = 0; i < count; i++) {
+        //! i=i+1 is same as i++. lly i=i-1 is same as i--
+        sum = sum + expense[i];
+      }
+      console.log("for loop output is (sum):", sum);
+
+      /* *********************** FOR...OF loop **************************** */
+      //! for..of loop example. Used to loop through an ARRAY
+      var amount = [500, 400, 100, 200];
+      summ = 0;
+      for (var e of amount) {
+        summ = summ + e;
+      }
+      console.log("for..of loop output is (summ):", summ);
+
+      //! another for..of loop example
+      var students = [
+        {
+          id: 1,
+          name: "anita",
+        },
+        {
+          id: 2,
+          name: "bavya",
+        },
+        {
+          id: 3,
+          name: "cilin",
+        },
+      ];
+      console.log("for..of loop example:");
+      for (var s of students) {
+        console.log(s);
+      }
+
+      /* *********************** FOR...IN loop **************************** */
+      //! for..in loop example. Used to loop through properties inside an OBJECT
+      student = {
+        id: 1,
+        name: "haya",
+        place: "kannur",
+      };
+      console.log("for..in loop example:");
+      for (var key in student) {
+        console.log(key, student[key]);
+      }
+
+      /* *********************** WHILE loop **************************** */
+      counter = 0;
+      console.log("while loop example:");
+      while (counter < students.length) {
+        console.log(students[counter]);
+        counter++;
+      }
+
+      /* *********************** DO WHILE loop **************************** */
+      //! 'do' will get executed once for sure. The repeted execution depends upon 'while' condition
+      console.log("do-while loop example:");
+      do {
+        console.log("Current time:", new Date());
+        // var option = prompt("Do you want to continue?");
+      } while(option == "y")
+    </script>
+  </body>
+</html>

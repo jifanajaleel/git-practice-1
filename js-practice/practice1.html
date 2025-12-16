@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <script>
+      console.log("Hello");
+      console.log(10 + 20, 20 - 10, 10 * 4, "result");
+      console.warn("This is used to show warning");
+      console.error("This is an error");
+
+      //! primary datatypes in js - number, string, boolean, function, object
+
+      /* *************** LET DECLARATION ****************** */
+      //! let - A let variable works only inside the nearest { ... } block. Eg:
+      if (true) {
+        let l = 10;
+        console.log("let l value is", l); // 10
+      }
+      // console.log(l);     //! ❌ Error (l is not available here)
+
+      //! let - A let variable can be re-assigned. But it cannot be re-declared
+      let name = "John";
+      name = "David"; //! ✔️ allowed
+      console.log("let value modified to", name);
+
+      /* *************** CONST DECLARATION *************** */
+      //! A const (constant) works inside the nearest { ... } block just like let. Cannot be re-assigned & re-declared. const is used when the variable’s value should never change. But if it's an object or array, you can still modify what's inside it
+      const PI = 3.14;
+      const person = { name: "John" };
+      person.name = "David"; //! ✔️ Allowed
+      // person = {};             //! ❌ Not allowed
+
+      const numbers = [1, 2, 3];
+      numbers.push(4); //! ✔️ Allowed
+      console.log("const list is added/pushed with 4", numbers);
+      // numbers = [5, 6];    //! ❌ Not allowed
+
+      /* *************** VARIABLE DECLARATION *************** */
+      //! A variable can be re-assigned & re-declared. It works outside the { ... }
+      var x = 10;
+      var y = 100;
+      y = 50;
+      var x = 5;
+      var sum = x + y;
+      //console.log(summ);
+      console.log("Sum is", sum);
+      document.write(sum); //! to write inside the Body of webpage
+      //alert(sum);
+
+      //! String datatype
+      //! String concatenation
+      var company = "Upcode";
+      company = "Upcode company";
+      var message = "Welcome to " + company;
+      console.log(message);
+      //! String concatenation with number
+      str_int = company + 100;
+      console.log(str_int);
+
+      //! Boolean datatype - true or false. Can be used along with && and ||
+      var passedWrittenExam = true;
+      var passedPracticalExam = false;
+      var eligibleForPromotion = passedWrittenExam && passedPracticalExam;
+      console.log("eligibleForPromotion:", eligibleForPromotion);
+
+      //! Date datatype
+      var todayDate = new Date();
+      console.log("Today's date is", todayDate);
+      var birthDate = new Date(2000, 2, 5, 6); //! year, month, day, time
+      console.log("Birth date is", birthDate);
+      console.log("Birth year is", birthDate.getFullYear());
+      console.log("Birth month is", birthDate.getMonth());
+
+      /* *************** FUNCTION ******************** */
+      //! A function can be called from js & html. It can be defined in js only
+      function addTwoNumber(x, y) {
+        var sum = x + y;
+        console.log("Sum:", sum);
+        return sum;
+      }
+      var f1 = addTwoNumber(30, 70);
+      console.log("addTwoNumber function output is", f1);
+
+      //! function without return eg:
+      function greet(name) {
+        console.log("Hai " + name);
+      }
+      greet("Jifana");
+
+      //! typeof function
+      console.log("Type of addTwoNumber is", typeof addTwoNumber);
+      console.log("Type of sum is", typeof sum);
+      console.log("Type of message is", typeof message);
+
+      /* *************** OBJECT IN JS ******************** */
+      //! An object's value could be number, string, boolean, function, object
+      var s1 = {
+        name: "Arun",
+        address: {
+          street: "SM street",
+          postal: "680493",
+        },
+        course: "Backend dev",
+        age: 32,
+        paidFees: true,
+        greet: function () {
+          //! Funcion in an object is called method
+          console.log("Hello " + this.name);
+        },
+      };
+      console.log("s1 object:", s1);
+      console.log("course of s1:", s1.course);
+      console.log("address of s1:", s1.address);
+      console.log("type of s1:", typeof s1);
+      s1.greet();
+
+      //! console is an object & log, warn, error are functions. lly, document is also an object
+
+      /* *************** DOM-Document Object Model ******************** */
+      //! It's a programming interface which treat html document as a tree structure
+      console.log(document); // Actually, document means html document
+      document.write("<h1>Writing into document</h1>");
+      // document.body.style.backgroundColor = "yellow";
+      // document.body.style.display = "none";
+
+      /* *************** Array ******************** */
+      var topScores = [1002, 8456, 4332, 6673]; // number array
+      var topScorerNames = ["Anu", "Basil", "Cilin", "Dona"]; // string array
+      //! To fetch array elements
+      console.log(
+        "1st & 2nd element of topScores array is : " + topScores[0],
+        topScores[1]
+      );
+      //! To get array length
+      console.log("length of topScores array is : " + topScores.length);
+      //! To add an element in array
+      topScores.push(1111);
+      console.log("topScores after adding 1111 is :", topScores);
+      //! To remove an elemnt from array
+      var a = topScores.pop();
+      console.log("popped element is", a);
+      console.log("topScores after popping 1111 is :", topScores);
+
+      topScorerNames.pop();
+      console.log(topScorerNames);
+
+      //! object array eg is shown below. lly function array can be created
+      var studentArray = [
+        {
+          name: "Niya",
+          age: 25,
+        },
+        {
+          name: "Sara",
+          age: 22,
+        },
+      ];
+
+      //! Check the scipt at the bottom of body section - Find an element from document
+
+      /* *************** Conditions in js ******************** */
+        var maxScore = 50;
+        var cutOff = 25;
+        var finalScore = 45;
+        if (finalScore >= cutOff) {
+            console.log("Passed");
+        } else {
+            console.log("Failed");
+        }
+
+        if (finalScore == maxScore) {  //! == checks if both values are equal or not. === checks if both values & datatypes are equal or not
+            console.log("Excellent!!! You are outstanding")
+        }
+
+    </script>
+  </head>
+  <body>
+    <header>header</header>
+    <div>
+      <!--Division - it is an html container. Creates big sections, starts on a new line -->
+      <h1 style="color: brown" onclick="addTwoNumber(3, 4)">
+        <!--onclick is an event -->
+        This is h1 from div. This is 2nd line of div h1
+      </h1>
+      <span>
+        <!--It is an inline html container used to style or group small pieces of text. Used for styling small text inside a line-->
+        This is span from div      
+        <button onclick="addTwoNumber(300, 400)" id="btnAdd">
+          Add two numbers
+        </button>
+      </span>
+      <p>This is paragraph <span style="color: red">from div</span></p>
+      <span>
+        This is 2nd span from div<br />
+        First number: <input type="text" id="firstNumber" /><br />
+        Second number: <input type="text" id="secondNumber" /><br />
+        <button onclick="multiplyTwoNumber()" id="btnMultipy">Multiply two numbers</button>
+        <label id="result">Product</label>
+      </span>
+      <span>
+        <br />Score: <input type="text" id="score" /><br />
+        <input type="button" onclick="validate()" value="Validate" />
+        <h1 id="result"></h1>
+
+      </span>
+
+    </div>
+    This is in body
+    <script>
+      /* *************** Find an element from document ******************** */
+      //! This code has been added in here because btnAdd cannot be identified from above script area since the declaration is happening after the script area, inside div
+      var btn = document.getElementById("btnAdd");
+      btn.style.color = "blue";
+      btn.innerText = "Add 2 numbers"; //! Reads or writes only text. Faster
+      // btn.innerHTML = "<h3>Add</h3>";  //!--Reads or writes HTML + text. Slower
+      console.log("btn:", btn);
+      function multiplyTwoNumber() {
+        var n1Element = document.getElementById("firstNumber");
+        var n2Element = document.getElementById("secondNumber");
+
+        console.log("n1Element:", n1Element);
+        console.log("n1Element.value:", n1Element.value);
+        console.log("n2Element.value:", n2Element.value);
+
+        n1 = parseFloat(n1Element.value);  //! converts string into float
+        n2 = parseFloat(n2Element.value);
+        var product=n1*n2;
+        document.getElementById("result").innerText = "Product is : " + product;
+      };
+      
+    </script>
+  </body>
+</html>

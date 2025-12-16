@@ -1,0 +1,87 @@
+<html>
+    <body>
+        <div class="products"></div>
+        <script>
+            /* *********************** CALLING API FROM BROWSER USING FETCH **************************** */
+            //! Use postman first to get to know about 4 HTTP methods - GET, DELETE, POST, PUT
+
+            //! example for GET method
+            async function getAllProducts() {
+                var productResponse = await fetch("https://fakestoreapi.com/products", {
+                    method: "GET"
+                });
+                var data = await productResponse.json();  //! API response comes as JSON string(text). array of (product) objects. This productResponse.json() converts JSON string → JS object
+                console.log("GET data:", data);
+                var prodsElList = document.getElementsByClassName("products");  //! getElementsByClassName returns a list
+                console.log("length of prodsElList:", prodsElList.length);
+                var prodsEl = prodsElList[0];
+                console.log("prodsEl:", prodsEl);
+                var prodCards = "";
+                for(var prod of data) {
+                    prodCards = prodCards + '<div>' + '<h2>' + prod.title + '</h2><img height="100px" src="' + prod.image + '"/>' + '</div>';
+                }
+                console.log("prodCards:", prodCards);
+                prodsEl.innerHTML = prodCards;
+            }
+            getAllProducts();
+
+            //! example for POST method
+            async function createProd() {
+                prd = {  //! This is a JS object
+                    "title": "Test Product",
+                    "price": 999,
+                    "description": "Created using Postman",
+                    "image": "https://i.pravatar.cc",
+                    "category": "electronics"
+                };
+                var prd_str = JSON.stringify(prd);  //! To convert JS object to JSON string. This conversion is needed to send data to API
+                // var prd_obj = JSON.parse(prd_str);  //! To convert JSON string to JS object
+                //! JS Object → Editable form & JSON String → Printed document
+                //! json eg -> {"id":1,"title":"Laptop"} & js eg -> {id: 1, title: "Laptop"}
+                var response = await fetch("https://fakestoreapi.com/products", {  //! In the api url, '/products/1' cannot be provided as POST will automatically add the data as a new element
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "jiajdoemc"  //! Authorization is provided as a header . It's value is JWT (here jiajdoemc is JWT)
+                    },
+                    body: prd_str
+                })
+                var data = await response.json();
+                console.log("POST data:", data)
+            }
+            createProd();
+            
+            //! example for PUT method
+            async function updateProd() {
+                prod = {
+                    "title": "Test Product",
+                    "price": 999,
+                    "description": "Created using Postman",
+                    "image": "https://i.pravatar.cc",
+                    "category": "electronics"
+                };  //! This is a JS object
+                var prod_str = JSON.stringify(prod);  //! Converts a JS object into a JSON string. A JSON string is an immutable text. Cannot be accessed with a dot. JSON.stringify basically converts keys of a js object into string & thus it's type itself becomes string
+                var response = await fetch("https://fakestoreapi.com/products/21", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: prod_str
+                })
+                var data = await response.json();
+                console.log("PUT data:", data)
+            }
+            updateProd();
+            
+            //! example for DELETE method
+            async function deleteProd() {
+                var response = await fetch("https://fakestoreapi.com/products/2", {
+                    method: "DELETE"
+                })
+                var data = await response.json();
+                console.log("DELETE data:", data)
+            }
+            deleteProd();
+        </script>
+    </body>
+</html>
