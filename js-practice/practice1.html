@@ -182,11 +182,50 @@
         date: "31-12-2022",
         topic: "Weekly meeting",
         members: []
-      }    
+      }
       var weeklymeeting2 = weeklymeeting1;  //! Now I created another object same as weeklymeeting1, only date should be updated
       weeklymeeting2.date = "07-01-2023";
       console.log("Weekly meeting objects:");
       console.log(weeklymeeting1, weeklymeeting2);  //! date of both weeklymeeting1 & weeklymeeting2 got updated, unlike primitive datatype
+
+      /* *************** SPREAD OPERATOR ******************** */
+      //! Denoted as ...
+      //! Used to spread properties inside an object. Also used in arrays to spread elements in an array
+
+      //! SPREAD OPERATOR IN OBJECT
+      var weeklymeeting3 = {
+        date: "10-01-2023",
+        topic: "Weekly meeting",
+        members: []
+      }
+      var weeklymeeting4 = {...weeklymeeting3};
+      weeklymeeting4.date = "20-01-2023";
+      console.log("Weekly meeting objects after using spread:");
+      console.log(weeklymeeting3, weeklymeeting4);
+
+      //! REFERENCE TYPE - Array example
+      var students = ["Jafar", "Akshay"];
+      var topScorer = students;
+      students.push("Javid");
+      console.log("students & topScorer arrays: ", students, topScorer);  //! both arrays got updated with Javid
+
+      //! SPREAD OPERATOR IN ARRAY
+      var students1 = ["Jafar", "Akshay"];
+      var topScorer1 = [...students1];
+      students1.push("Javid");
+      console.log("students & topScorer arrays after using spread: ", students1, topScorer1);
+
+      /* *************** REST OPERATOR ******************** */
+      //! Denoted as ... just like Spread
+      function add(...numbers) {  // rest operator. Here, numbers could have any number of elements. So rest operator converts (or rests) a number of array elements into one
+        let sum = 0;
+        for (let i=0; i<numbers.length; i++) {
+          sum = sum + numbers[i];
+        }
+        return sum;
+      }
+      console.log("add(10, 20, 20) using rest operator: ", add(10, 20, 20));  //! here (10, 20,20) will be considered as an array and then pass into add function and stored in numbers
+      console.log("add(1, 2, 2, 5) using rest operator: ", add(1, 2, 2, 5));
 
       //! console is an object & log, warn, error are functions. lly, document is also an object
 
