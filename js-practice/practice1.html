@@ -168,7 +168,7 @@
       /* *************** VALUE TYPE & REFERENCE TYPE ******************** */
 
       //! VALUE TYPE
-      //! For primitive data types, we can update the variable value after copying. For objects, we can't do this. You will get to know more in the coming examples
+      //! For primitive data types, we can update the variable value after copying. For objects & arrays, we can't do this. You will get to know more in the coming examples
       //! Primitive datatypes are of VALUE TYPE
       var og_name = "Jifana";
       var pet_name = og_name;
@@ -290,7 +290,7 @@
   <body>
     <header>header</header>
     <div>
-      <!--Division - it is an html container. Creates big sections, starts on a new line -->
+      <!--Division or div - it is an html container. Creates big sections, starts on a new line -->
       <h1 style="color: brown" onclick="addTwoNumber(3, 4)">
         <!--onclick is an event -->
         This is h1 from div. This is 2nd line of div h1
@@ -314,9 +314,7 @@
         <br />Score: <input type="text" id="score" /><br />
         <input type="button" onclick="validate()" value="Validate" />
         <h1 id="result"></h1>
-
       </span>
-
     </div>
     This is in body
     <script>
@@ -340,7 +338,6 @@
         var product=n1*n2;
         document.getElementById("result").innerText = "Product is : " + product;
       };
-      
     </script>
   </body>
 </html>
