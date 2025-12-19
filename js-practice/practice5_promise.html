@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <script>
+            /* *********************** PROMISE USECASE - FETCHING DATA **************************** */
+            //! fetch & json conversion are promises         
+            var productsPromise = fetch("data/products.json");  // fetch is returning a promise object. That promise represents a future result
+            productsPromise.then((response) => {
+                console.log("Products response received:", response);  // response is of ReadableStream type. Check in console
+                var dataPromise = response.json();  // response.json() is also returning a promise. But we need the data inside data/products.json
+                dataPromise.then((productsData) => {
+                    console.log("Successfully converted products data:", productsData);
+                }, (error) => {
+                    console.log("Json conversion failed for products:", error);
+                })
+            }, (error) => {
+                console.log("Fetch failed for products");
+            });
+
+            //! another promise usecase for fetching data
+            var categoriesPromise = fetch("data/categories.json");
+            categoriesPromise.then((response) => {
+                console.log("Categories response received:", response);
+                response.json().then((categoriesData) => {
+                    console.log("Successfully converted categories data:", categoriesData);
+                }, (error) => {
+                    console.log("Json conversion failed for categories:", error);
+                })
+            }, (error) => {
+                console.log("Fetch failed for categories");
+            });
+            /*
+            NOTE for the above code:
+            1. fetch("data/categories.json") sends an HTTP GET request, does not wait, immediately returns a Promise
+            2. At this moment, Request is in progress, No data yet
+            3. categoriesPromise.then((response) => { 
+                -> This .then() runs only if fetch succeeds (network success)
+            4. a 'response' object contains status (200, 404, etc.), headers, body (stream)
+            5. response.json() does NOT return data. It returns a Promise. This Promise resolves to a JavaScript object
+            6. response.json().then((categoriesData) => {
+                console.log("Successfully converted categories data:", categoriesData);})
+                -> categoriesData is a JavaScript object / array. JSON text is now fully parsed
+            */
+
+            /* *********************** PROMISE USECASE - all **************************** */
+            //! Promise.all() lets multiple async tasks run in parallel and gives us the result only when all of them are ready
+            //! Suppose I want to combine above 2 promise usecases together
+            //! Below code fetches products and categories in parallel using Promise.all, waits for both responses, converts them to JSON, and logs the results.
+            var productPromise = fetch("data/products.json");
+            var categoryPromise = fetch("data/categories.json");
+            Promise.all([productPromise, categoryPromise]).then((values) => {  //! Promise.all() Waits for all Promises. Resolves ('values' will be obtained) when all promises succeed
+                const productsResponse = values[0];
+                const categoryResponse = values[1];
+
+                productsResponse.json().then((data) => {  //! data (js object/array) is obtained when productsResponse.json() promise is resolved
+                    console.log("Products:", data);
+                })
+                categoryResponse.json().then((data) => {  //! General note -> .json() should be called only once per response
+                    console.log("Categories:", data);
+                })
+            }, (error) => {})
+
+            //! Cleaner & recommended version of the above code
+            Promise.all([
+                fetch("data/products.json").then(response => response.json()),
+                fetch("data/categories.json").then(response => response.json())
+            ]).then(([products, categories]) => {
+                console.log("Products_alternative_way:", products);
+                console.log("Categories_alternative_way:", categories);
+            }).catch(error => {
+                console.log("Error:", error);
+            });
+
+            /* *********************** PROMISE USECASE - any **************************** */
+            //! Promise.any() returns the result of the first successful Promise and ignores failures
+            var prodPromise = fetch("data/products.json");
+            var catPromise = fetch("data/categories.json");
+            Promise.any([prodPromise, catPromise]).then((value) => {
+                const firstResponse = value;
+                firstResponse.json().then((data) => {
+                    console.log("Data:", data);
+                })
+            }, (error) => {})
+
+            /* *********************** ASYNC & AWAIT IN JS **************************** */
+            //! async/await is a special syntax to work with promises in a more comfortable fashion
+            //! using 'then' in 'promise' function can be eliminated if we use async & await. Basically function definition becomes simpler & line of code got reduced with async & await
+            //! will have to use any one - either async/await or '.then' to work with promise
+            async function fetchProducts() {
+                var prodResponse = await fetch("data/products.json");  //! await pauses execution until a Promise is resolved. prodResponse is a response object
+                var prodData = await prodResponse.json();  //! prodData is a js object (or array). This line of code is same as -> prodResponse.json().then(data => {prodData = data;});
+                console.log("P data:", prodData);
+            }
+            fetchProducts();
+            /* 
+            NOTE for the above code:
+            1. fetch() sends an HTTP GET request to get products.json
+            2. fetch() returns a Promise, not data
+            3. await waits or pauses the execution until the Promise resolves
+            4. When resolved, you get a Response object. Here prodResponse is a response object
+            5. prodResponse contains: status (200, 404, etc.), headers, body (JSON data, not yet readable)
+            6. prodResponse.json() returns a promise. That Promise will read the response body, parse json, finally resolve to a JS object. prodData is a js object (or array) at the end, not a promise, Because await unwraps the promise. This line of code is same as -> prodResponse.json().then(data => {prodData = data;});
+            7. In conclusion, what you get from each code is mentioned below
+                    fetch(url) -> Promise
+                    await fetch(url) -> Response object
+                    response.json() -> Promise
+                    await response.json() -> JS object
+            */
+            
+            //! if we use async alone (without await), then it means we are trying to convert the function to a promise. This is equivalent to 'resolve' which we have seen earlier in new Promise(() => {});
+            async function newFunct() {
+                return "hello"
+            }
+            console.log(newFunct());
+            console.log("index");
+        </script>
+    </head>
+    <body></body>
+</html>
