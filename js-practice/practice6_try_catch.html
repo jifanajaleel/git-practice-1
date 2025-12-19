@@ -13,6 +13,19 @@
                 console.log("Catch block:", error);
             }
             console.log("Execution in going well");
+
+            // try catch in promise with async, await
+            async function fetchProducts() {
+                try {
+                    var productsResponse = await fetch("data/products.json");
+                    var productsData = await productsResponse.json();
+                    console.log("P data:", productsData);
+                } catch (error) {
+                    console.log("Error:", error);
+                }               
+            }
+            fetchProducts();
+            console.log("Execution in going well again");
         </script>       
     </head>
     <body></body>
