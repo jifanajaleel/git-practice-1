@@ -43,6 +43,7 @@
 
             /* *********************** PROMISE USECASE - all **************************** */
             //! Promise.all() lets multiple async tasks run in parallel and gives us the result only when all of them are ready
+            //! Promise.all() resolves when all of the input Promises have resolved, or rejects as soon as one of the Promises in the array rejects
             //! Suppose I want to combine above 2 promise usecases together
             //! Below code fetches products and categories in parallel using Promise.all, waits for both responses, converts them to JSON, and logs the results.
             var productPromise = fetch("data/products.json");
@@ -72,6 +73,7 @@
 
             /* *********************** PROMISE USECASE - any **************************** */
             //! Promise.any() returns the result of the first successful Promise and ignores failures
+            //! The any method in Promise allows you to wait for the first promise to be fulfilled and returns a single promise that resolves with the value of the first promise that resolves
             var prodPromise = fetch("data/products.json");
             var catPromise = fetch("data/categories.json");
             Promise.any([prodPromise, catPromise]).then((value) => {
