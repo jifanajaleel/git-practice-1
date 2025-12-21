@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-practice",
+  "version": "1.0.0",
+  "description": "This is to practice nodejs",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "math_functions.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "moment": "^2.30.1"
+  }
+}
