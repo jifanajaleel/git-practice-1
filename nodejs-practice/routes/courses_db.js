@@ -1,4 +1,5 @@
-//! Creating route file - 3rd method
+//! Creating route file - 3rd method.
+//! Connecting to database & fetching records from database
 
 const express = require("express");  // remove "type":"module" from package.json to use require
 const router = express.Router();  // router → mini Express app. Used to group related routes
