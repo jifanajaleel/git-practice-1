@@ -1,4 +1,5 @@
 //! Creating 2nd controller file
+//! Connecting to database & fetching records from database
 
 const pool = require("../config/courses_db");
 

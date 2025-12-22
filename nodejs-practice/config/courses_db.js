@@ -1,3 +1,4 @@
+//! Connecting to database & fetching records from database
 const { Pool } = require("pg");
 
 const pool = new Pool({

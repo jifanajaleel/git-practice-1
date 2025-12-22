@@ -1,3 +1,4 @@
+//! Connecting to database & fetching records from database
 const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config({path: "./config/config.env"});
