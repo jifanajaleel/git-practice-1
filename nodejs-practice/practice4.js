@@ -8,7 +8,7 @@ console.log("convertDateToDDMMMYYYY function output:", convertDateToDDMMMYYYY(ne
 console.log("today function output:", today());
 
 //! Asynchronous functions
-// setTimeout is a callback function
+// setTimeout is not a callback function. The function defined inside it is a callback function
 setTimeout(() => {
     console.log("From setTimeout")
 }, 0);  // even though 0 is the time given in here, setTimeout will be executed after printing "After setTimeout" from below line
@@ -21,10 +21,10 @@ var content = fs.readFileSync("data.txt");
 console.log("Plain content:", content);  // this will give Buffer
 console.log("After conversion to string in synch fn:", content.toString());
 console.log("After synchronous fn");
-// same alternatice non blocking code is defined below
+// same alternative non blocking code is defined below
 
 //! To read content from a txt file in asynchronous mode
-//! Callback function
+//! Callback function - A callback function is a function that is passed as an argument to another function and is executed later, usually after some operation completes
 // non blocking code
 fs.readFile("data.txt", (err, data) => {  // here the arrow fn is a callback fn. After reading file content from data.txt, the callback fn will get executed
     if (err) {

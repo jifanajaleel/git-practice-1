@@ -1,4 +1,5 @@
 /* ********************************** IMPORT FUNCTIONS from other js files ********************************** */
+// remove "type":"module" from package.json to use require
 var addTwoNum = require('./math_functions');  // imports math_functions.js
 var res = addTwoNum(2,3);
 console.log("addTwoNum result is : ", res);
@@ -69,16 +70,6 @@ console.log("name & course:", name, course);
 var {name, course} = member1;  // here we are creating variables from an object
 console.log("name & course after object destructuring:", name, course);
 
-/* ********************************** OBJECT LITERAL ENHANCEMENT ********************************** */
-// The opposite operation of object destructuring can be done now, i.e, creating an object from variables
-var productName = "iPhone 14";
-var price = 85000;
-var product = {
-    productName,
-    price
-}
-console.log("object created from variables:", product);
-
 // object destructuring another example
 var member2 = {
     name: "Hina",
@@ -90,6 +81,16 @@ var member2 = {
 var {name, course: {duration}} = member2;
 name = "ABC";
 console.log("object destructuring: ", member2, name, duration);
+
+/* ********************************** OBJECT LITERAL ENHANCEMENT ********************************** */
+// The opposite operation of object destructuring can be done now, i.e, creating an object from variables
+var productName = "iPhone 14";
+var price = 85000;
+var product = {
+    productName,
+    price
+}
+console.log("object created from variables:", product);
 
 /* ********************************** ARRAY DESTRUCTURING ********************************** */
 var rankHolders = ["Samuel", "James", "Aryan", "David"];
@@ -156,7 +157,7 @@ if (flag==false) {
 
 /* *************************** clearInterval ************************ */
 var timerId1 = setInterval(timer, 3000);
-flag=true;
+flag=false;
 if (flag==false) {
     clearInterval(timerId1);  // timer function will not get executed now since flag is false. If flag is true, 'timer' will get printed infinitely with 3sec delay
 }

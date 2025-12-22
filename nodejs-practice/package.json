@@ -4,13 +4,19 @@
   "description": "This is to practice nodejs",
   "license": "ISC",
   "author": "",
-  "type": "module",
   "main": "math_functions.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production node practice7_express.js",
+    "dev": "nodemon practice7_express.js"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "moment": "^2.30.1"
+    "moment": "^2.30.1",
+    "pino-http": "^11.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }

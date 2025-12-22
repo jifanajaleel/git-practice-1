@@ -8,6 +8,7 @@ which in turn takes two parameters: resolve and reject. Inside this function, yo
 resolve() when it's successful or reject() when it's not */
 
 // *****PROMISE IN ACTION*****
+// Usually asynchronouse operation runs inside Promise. In below example, the function inside setTimeout function is callback function (which is asynchronous) since it runs after 3sec
 var p = new Promise((resolve, reject) => {
     setTimeout(() => {
         // resolve("Data from promise")  // either resolve or reject will be printed. Cannot uncomment both together. Try running this line of code after commenting the below line
@@ -16,7 +17,7 @@ var p = new Promise((resolve, reject) => {
 });
 
 // *****CONSUMING A PROMISE*****
-// then, catch can be used for this
+// then, catch, finally can be used for this
 // In the definition, there will be 2 functions - 1st function will be of success & 2nd function will be of failure
 // Below one is a consumer
 p.then((data) => {  // resolve will be passed into data (for success case) & reject will go to error (for failure case)
@@ -93,16 +94,16 @@ var r = new Promise((resolve, reject) => {
         reject("rejected")
     }, 3000);
 });
-console.log("Promise:", r)  // pending
+console.log("Promise:", r)  // PENDING
 
 
 // below is 1 subsriber
 r.then((data) => {
     console.log("Received by consumer 1:", data);
-    console.log("Promise success consumer 1:", r);  // success
+    console.log("Promise success consumer 1:", r);  // SUCCESS
 }, (error) => {
     console.log("Error from consumer 1:", error);
-    console.log("Promise failed consumer 1:", r);  // failed
+    console.log("Promise failed consumer 1:", r);  // FAILED
 });
 
 // below is another 1 subsriber

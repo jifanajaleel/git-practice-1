@@ -1,4 +1,4 @@
-var moment = require('moment');  // If "type": "module" is not added in package.json, we should use require as our file is CommonJS
+var moment = require('moment');  // If "type": "module" is not added in package.json, we should use 'require'
 //! Date
 var d1 = moment().format();
 console.log('default date:', d1);
