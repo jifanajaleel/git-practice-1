@@ -7,7 +7,7 @@ const pool = require("../config/courses_db");
 // @route    GET /api/v1/courses
 // @access   public
 const getCourses = (req, res, next) => {  // give http://localhost:5000/api/v1/courses in GET in postman
-    pool.query("select id, title, duration from courses", (error, results) => {
+    pool.query("select id, title, duration from courses", (error, results) => {  // pool.query() Gets a connection from the pool, Executes SQL, Releases the connection back to the pool
         if (error) throw error;
         res.status(200).json(results.rows);
     })

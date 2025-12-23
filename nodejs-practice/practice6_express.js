@@ -1,10 +1,10 @@
 //! Creating server using express
 //! https is a low-level (manual & detailed) method to create server. Express is high-level (easy & clean)
 
-// const dotenv = require("dotenv");  // remove "type":"module" from package.json to use require
-// const express = require("express");
-import express from "express";  //! express is a library used to create servers easily, unlike http module. Express is a framework built on top of http
-import dotenv from "dotenv";  //! used to read environment variables from a .env or config.env file
+// import express from "express";  //! add "type":"module" in package.json to use import
+// import dotenv from "dotenv"; 
+const dotenv = require("dotenv"); //! used to read environment variables from a .env or config.env file
+const express = require("express");  //! express is a library used to create servers easily, unlike http module. Express is a framework built on top of http
 dotenv.config({path: "./config/config.env"});  //! loads environment variables from 'config/config.env' into process.env
 
 const server = express();  // server created

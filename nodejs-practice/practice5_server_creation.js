@@ -1,9 +1,10 @@
 //! CREATING A SIMPLE SERVER USING NODEJS
 // Suppose the scenario is: you are sending a request from browser to the server & getting response back from server to browser
-// const http = require("http");  // this won't work since "type": "module" is added in package.json
 // Server creation is not a one-time action. It is a continuous listening process
-import http from "http";  // 'const http = require("http");' is given by jafarkka. Anyways, this line of code loads Node.js’s built-in HTTP module. This module lets you create servers, handle requests and responses
-import dotenv from "dotenv";  // 'const dotenv = require("dotenv");' is given by jafarkka. Both are same. dotenv is used to read environment variables from a .env or config.env file
+// import http from "http";  // This will work only if "type": "module" is added in package.json
+// import dotenv from "dotenv";
+const http = require("http");  // this line of code loads Node.js’s built-in HTTP module. This module lets you create servers, handle requests and responses
+const dotenv = require("dotenv");  // dotenv is used to read environment variables from a .env or config.env file
 dotenv.config({path: "./config/config.env"});  // here path of configuration file (env file) should be mentioned. This line loads environment variables from 'config/config.env' into process.env
 
 const server = http.createServer((req, res) => {  // http.createServer() creates an HTTP server. It takes a callback function. This callback runs every time a client makes a request. Here req & res are objects
@@ -28,11 +29,11 @@ server.listen(PORT, () => {  // Tells Node to start listening for requests. The 
 })
 //! Your machine is now an active server
 
-//! Either give http://localhost:8080 in postman GET method or try giving the link in browser address bar too. Then only you will get the output in console
+//! Either give http://localhost:8080 in postman GET method or try giving the link in browser address bar. Then only you will get the output in console and in the postman(check status code, body, header)
 
 /* 
 1. Run practice5_server_creation.js
-2. Server starts listening
+2. Server starts listening & port is opened
 3. Browser hits localhost:8080 Or postman uses GET method in http://localhost:8080
 4. Callback (inside createServer) runs:
     req received

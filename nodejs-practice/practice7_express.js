@@ -1,6 +1,8 @@
 //! Creating GET, POST, PUT, DELETE endpoints in express
-import express from "express";
-import dotenv from "dotenv";
+// import express from "express";
+// import dotenv from "dotenv";
+const express = require("express");
+const dotenv = require("dotenv");
 dotenv.config({path: "./config/config.env"});
 
 const app = express();  //! Creates an Express application instance. app is your server object
@@ -16,13 +18,23 @@ app.get("/", (req, res) => {  //! Defines a GET API route. / means the root URL 
     // });
     // res.sendStatus(400);  // 400 Bad Request status will be printed
     // res.status(400).json({error:"Invalid email id"});  // 400 Bad Request status will be printed along with {error:"Invalid email id"} in the Body
-    res.status(200).json({success:true, data:[{id:1, name:"Jifana"}]});
+    res.status(200).json({
+        success:true, 
+        data:[{
+            id:1, 
+            name:"Jifana"
+        }]});
 })
 
 //! api to get a single course details is shown below
 //! http://localhost:5000/api/v1/course. Give this link in postman
 app.get("/api/v1/course", (req, res) => {  // req & res are objects. "/api/v1/course" is a route
-    res.status(200).json({success:true, data:[{id:1, title:"NodeJS"}]});
+    res.status(200).json({
+        success:true, 
+        data:[{
+            id:1, 
+            title:"NodeJS"
+        }]});
 })
 
 //! http://localhost:5000/api/v1/course/<id>. You can try giving id as 1 or 2 or anything in postman
