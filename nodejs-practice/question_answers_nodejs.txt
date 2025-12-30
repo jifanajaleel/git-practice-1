@@ -1,4 +1,3 @@
-//! More info: External storage like S3 upload, formidable
 
 Q)What is Amazon S3, and why is it used for storing uploaded files?
 an)Amazon S3 (Simple Storage Service) is a cloud storage service provided by Amazon Web Services (AWS). It is used for storing and retrieving any amount of data at any time, from anywhere on the web. S3 is commonly used for storing uploaded files because it offers:
