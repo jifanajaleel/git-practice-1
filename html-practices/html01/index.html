@@ -1,0 +1,21 @@
+<!--Configuring CORS in NODEjs API-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            UPCODE: This is html intro
+        </title>
+    </head>
+    <body>
+        <h1>HTML</h1>
+    </body>
+    <script>
+        async function getCourses() {
+            const response = await fetch("http://localhost:5000/api/v1/courses")
+            console.log(response);
+            const data = await response.json();
+            console.log("data:", data);
+        }
+        getCourses()
+    </script>
+</html>
