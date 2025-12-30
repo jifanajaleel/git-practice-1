@@ -1,5 +1,6 @@
 //! Refactoring code: Moving DB interaction logic to repositories
 //! A repository does not need to know anything about requests & responses. It just need to handle database interactions
+//! Repositories return what the controller needs — not what the database returns
 
 const { duration } = require("moment");
 const pool = require("../config/courses_db");
@@ -43,7 +44,7 @@ const createCourse = (title, duration) => {
 };
 
 // answer for the below function should be simply true or false
-// checkCourseExistsById is a boolean helper. That’s why it always resolves, never rejects. Two resolve() calls handle different outcomes
+// checkCourseExistsById is a boolean helper. That’s why it always resolves, and never rejects. Two resolve() calls handle different outcomes
 // Why two resolve() calls? - Because “exists” and “does not exist” are NOT errors
 const checkCourseExistsById = (id) => {
   return new Promise((resolve, reject) => {
@@ -69,14 +70,11 @@ const checkCourseExistsById = (id) => {
 
 const updateCourse = (id, title, duration) => {
   return new Promise((resolve, reject) => {
-    pool.query(
-      courseQueries.updateCourse,
-      [title, duration, id],
-      (error, results) => {
+    pool.query(courseQueries.updateCourse, [title, duration, id], (error, results) => {
         if (error) {
           reject(error);
         } else {
-          resolve(results.rows);  // here resolve(true); can be used instead of this line
+          resolve(results.rows);  // here 'resolve(true);' can be used instead of this line
         }
       }
     );
@@ -89,7 +87,7 @@ const deleteCourse = (id) => {
       if (error) {
         reject(error);
       } else {
-        resolve(results.rows);  // here resolve(true); can be used instead of this line
+        resolve(results.rows);  // here 'resolve(true);' can be used instead of this line
       }
     });
   });

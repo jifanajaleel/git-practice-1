@@ -66,3 +66,15 @@ Logic begind server operation:
 4. user interacts with browser or postman & makes api calls
 5. implemented logic is executed (defined in step 2)
 */
+
+/*
+courses table:
+|----|-------|----------|
+| id | title | duration |
+|----|-------|----------|
+
+users table:
+|----|------|----------|----------|
+| id | name | username | password |
+|----|------|----------|----------|
+*/

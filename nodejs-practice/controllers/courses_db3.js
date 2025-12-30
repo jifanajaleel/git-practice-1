@@ -1,49 +1,46 @@
-//! Code Refactoring: DRY. Implementing Async handler function to wrap controller functions
 //! Creating 5th controller file which is linked with repositories/courses.js
-//! This is same as courses_db2.js controller file except that here we have done - Code Refactoring: DRY. Implementing Async handler function to wrap controller functions
+//! This is same as courses_db2.js controller file except that here we have done - Code Refactoring: DRY. Implementing Async handler function to wrap controller functions (instead of using try-catch)
 //! In short, repeated code has been moved to middlewares/asyncHandler.js
 //! here try-catch has been removed for making the code look neat & instead asyncHandler is used
 
-const pool = require("../config/courses_db");
-const courseQueries = require("../queries/courses");
 const courseRepository = require("../repositories/courses");
-const ErrorResponse = require("../utils/errorResponse");
 const asyncHandler = require("../middlewares/asyncHandler");
+const ErrorResponse = require("../utils/errorResponse");  // To create custom error response
 
 // @desc     Get all courses
 // @route    GET /api/v1/courses
 // @access   public
 const getCourses = asyncHandler(async (req, res, next) => {  // asyncHandler executes the controller function -> Promise.resolve(fn(req, res, next)).catch(next);. If anything fails, automatically call next(error)
-  const courses = await courseRepository.getAllCourses();
+  const courses = await courseRepository.getAllCourses();  // courses is Array<Object>. Check what repository getCourses function is returning
   res.status(200).json({ success: true, data: courses });  // if DB works fine, Controller sends response. Flow stop here
-});  // if any error comes likeDB column typo or record not found or PostgreSQL error, then asyncHandler catches it. Error goes to errorHandler middleware
+});  // if any error comes like DB column typo or record not found or PostgreSQL error, then asyncHandler catches it. Error goes to errorHandler middleware
 
 // @desc     Get course by id
 // @route    GET /api/v1/courses/:id
 // @access   public
 const getCourse = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const course = await courseRepository.getCourseById(id);
+  const course = await courseRepository.getCourseById(id);  // course is Array<Object>. It'll have only 1 element
   if (course && course.length) {
     res.status(200).json({ success: true, data: course });
   } else {
     next(new ErrorResponse(`Course does not exist with id ${id}`, 404));  // here inside next, an ErrorResponse object is passed
     /*
     1. new ErrorResponse(...) creates a custom error object:
-            {
-              message: "Course does not exist with id 5",
-              statusCode: 404
-            }
+        {
+          message: "Course does not exist with id 5",
+          statusCode: 404
+        }
     2. next(errorObject) tells Express that an error occurred — stop normal flow and go to error middleware
     3. Express immediately jumps to:
-            const errorHandler = (error, req, res, next) => {
-              res.status(error.statusCode || 500).json({
-                message: error.message || "Server error"
-              });
-            };
+        const errorHandler = (error, req, res, next) => {
+          res.status(error.statusCode || 500).json({
+            message: error.message || "Server error"
+          });
+        };
     4. Client (Postman / browser) receives:
-            {"message": "Course does not exist with id 5"}
-       with HTTP status 404
+        {"message": "Course does not exist with id 5"}
+        with HTTP status 404
     
 
     Difference between next(error) and next(new ErrorResponse()):
@@ -73,9 +70,7 @@ const createCourse = asyncHandler(async (req, res, next) => {
   const { title, courseDuration } = req.body;
   const created = await courseRepository.createCourse(title, courseDuration);
   if (created) {
-    res
-      .status(201)
-      .json({
+    res.status(201).json({
         success: true,
         data: { message: "Course created successfully" },
       });
@@ -118,3 +113,38 @@ module.exports = {
   updateCourse,
   deleteCourse,
 };
+
+/*
+For a req object:
+|--------------------|----------------------------------------------------------------------------|
+| Property / Method	 |     What it contains                                                       |
+|--------------------|----------------------------------------------------------------------------|
+| req.query	         |     Query string parameters (/users?role=admin → req.query.role)           |
+| req.body	         |     Data sent in the request body (for POST/PUT/PATCH, JSON or form data)  |
+| req.headers        |     HTTP headers of the request                                            |
+| req.params         |   	 Route parameters (/users/:id → req.params.id)                          |
+| req.method         |  	 HTTP method (GET, POST, etc.)                                          |
+| req.url	           |     URL of the request                                                     |
+| req.cookies        |   	 Cookies (if using a cookie parser)                                     |
+| req.ip	           |     IP address of the client                                               |
+| req.hostname	     |     Hostname of the request                                                |
+| req.protocol	     |     HTTP or HTTPS                                                          |
+| req.get(headerName)|	   Get a specific header value                                            |
+| req.user	         |     Often set by authentication middleware to store user info              |
+|--------------------|----------------------------------------------------------------------------|
+
+For a res object:
+|---------------------------------|-----------------------------------------------------------|
+| Method / Property	              |  What it does                                             |
+|---------------------------------|-----------------------------------------------------------|
+| res.status(code)	              |  Set HTTP status code (e.g., 200, 404, 500)               |
+| res.send(body)	                |  Send a response (string, HTML, JSON, etc.)               |
+| res.json(obj)	                  |  Send JSON response (res.json({ success: true }))         |
+| res.set(header, value)	        |  Set HTTP response headers                                |
+| res.redirect(url)	              |  Redirect the client to a different URL                   |
+| res.cookie(name, value, options)|	 Set a cookie                                             |  
+| res.clearCookie(name)	          |  Clear a cookie                                           |
+| res.sendFile(path)	            |  Send a file as a response                                |
+| res.end()	                      |  End the response (often used with streams or raw data)   |
+|---------------------------------|-----------------------------------------------------------|
+*/

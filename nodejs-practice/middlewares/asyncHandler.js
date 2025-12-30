@@ -1,4 +1,5 @@
 //! Code Refactoring: DRY. Implementing Async handler function to wrap controller functions
+// usually middleware functions have req, res, next arguments
 
 const asyncHandler = (fn) => {  // fn = your controller function (which will be async). eg: getCourses
     return (req, res, next) => {  // asyncHandler returns a new function. The returned function (req, res, next) is what Express actually executes

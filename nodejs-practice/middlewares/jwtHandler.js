@@ -1,4 +1,5 @@
 //! Validating token and protecting API using middleware
+// usually middleware functions have req, res, next arguments.
 
 const { verifyToken } = require("../utils/jwtHelper");
 const { getUserRolesByUserId } = require("../repositories/users");
