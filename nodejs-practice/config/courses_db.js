@@ -1,4 +1,5 @@
 //! Connecting to database & fetching records from database
+
 const { Pool } = require("pg");  // pg is the PostgreSQL client library for Node.js. { Pool } means you are importing the Pool class from the pg package. Because pg exports multiple things and you only need Pool, curly braces is used for Pool. This is JavaScript destructuring
 /*
 Q) Why use Pool?
@@ -10,9 +11,9 @@ Q) Why use Pool?
 const pool = new Pool({  // Here you are creating a new connection pool. pool is an object that represents your DB connection manager
     user: "trainingdb_user",  // your PostgreSQL username
     password: "Ayzel@10",  // your PostgreSQL pwd
+    database: "trainingdb",
     host: "localhost",  // "localhost" means: PostgreSQL is running on the same machine as Node.js
-    port: 5432,  // PostgreSQL default port is 5432. If PostgreSQL runs on a different port, this must change
-    database: "trainingdb"
+    port: 5432  // PostgreSQL default port is 5432. If PostgreSQL runs on a different port, this must change
 })
 
 module.exports = pool;

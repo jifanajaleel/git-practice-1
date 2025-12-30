@@ -1,0 +1,9 @@
+Steps for creating 'users' table and API:
+
+1. create a table named 'user' in pgAdmin
+2. create a query named 'addUser'
+3. create a repository named 'createUser'
+4. create a controller named 'createUser'
+5. create a router
+6. create a js file (Here I updated practice12_db.js itself)
+7. create passwordHelper.js inside utils

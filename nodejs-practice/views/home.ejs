@@ -1,0 +1,44 @@
+<!-- Building a page using ejs template engine (EJS-Embedded JavaScript templating) -->
+<!-- This is an ejs template file -->
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>This is built in with ejs template engine</h1>
+        <h2>Today's offer product is: <%= product.title %></h2>  <!-- '=' is used to insert a data. For logic, we can skip '=' -->
+        <h3>Offer : <%= product.offerPerc %>%</h3>
+
+        <h1>Offer categories</h1>
+        <% var name = "aysha" %>
+
+        <% offerCategories.forEach((categ) => { %>
+            <h2><%= categ %></h2>
+        <% }) %>
+
+        Author: <%= name %>
+        <!-- 
+        Key EJS Syntax (Easy table):
+        ----------------------------
+            |---------------|------------------------|
+            | Syntax        | Meaning                |
+            |---------------|------------------------|
+            | <%= value %>	| Print value to HTML    |
+            | <% code %>	| Run JS logic           |
+            | res.render()	| Convert EJS → HTML     |
+            |---------------|------------------------|
+
+        Final Flow:
+        ------------
+        Browser → /home
+                ↓
+        Express route
+                ↓
+        res.render("home", data)
+                ↓
+        EJS + data → HTML
+                ↓
+        HTML sent to browser
+        -->
+    </body>
+</html>

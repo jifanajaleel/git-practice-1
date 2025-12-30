@@ -1,0 +1,20 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>This is sample static file</h1>
+        <h2>Select file and upload</h2>
+        <!-- Uploading file using multer in nodejs -->
+        <form action="/profile" method="POST" enctype="multipart/form-data">  <!-- "/profile" is the route -->
+            <input type="file" name="profileImage" >
+            <button type="submit">Submit</button><br />
+            <!-- when you upload a file in http://localhost:5000/index.html & click 'submit', it'll redirect to http://localhost:5000/profiles & shows 'File uploaded successfully' -->
+        </form>
+        <!-- Handling multiple file uploads in nodejs -->
+        <form action="/profiles" method="POST" enctype="multipart/form-data">  <!-- "/profiles" is the route -->   
+            <input type="file" name="productImages" multiple >  <!-- "multiple" means multiple files can be uploaded -->
+            <button type="submit">Submit multiple files</button>
+        </form>
+    </body>
+</html>

@@ -14,3 +14,11 @@ const logger = pinoLogger({
 });
 
 module.exports = logger;
+/*
+Some popular logger libraries for Express.js include:
+------------------------------------------------------
+Winston
+Morgan
+Pino
+Bunyan
+*/

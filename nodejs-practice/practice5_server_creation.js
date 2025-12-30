@@ -5,7 +5,7 @@
 // import dotenv from "dotenv";
 const http = require("http");  // this line of code loads Node.js’s built-in HTTP module. This module lets you create servers, handle requests and responses
 const dotenv = require("dotenv");  // dotenv is used to read environment variables from a .env or config.env file
-dotenv.config({path: "./config/config.env"});  // here path of configuration file (env file) should be mentioned. This line loads environment variables from 'config/config.env' into process.env
+dotenv.config({path: "./config/config.env"});  // here path of configuration file (env file) should be mentioned. This line loads environment variables from 'config/config.env' into process.env. Reads variables like PORT, NODE_ENV from config.env
 
 const server = http.createServer((req, res) => {  // http.createServer() creates an HTTP server. It takes a callback function. This callback runs every time a client makes a request. Here req & res are objects
     console.log("Request received:", req);  // req contains url, http method, headers, body (if method is POST/PUT). Usually too big for real apps (used only for learning/debugging)
