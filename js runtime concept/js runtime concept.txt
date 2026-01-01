@@ -1,0 +1,110 @@
+Introduction to event loop in JS & Nodejs:
+------------------------------------------
+
+Core:
+Physical processing units within a CPU. A CPU can have multiple cores, each capable of independent execution
+
+Process:
+A process is an instance of running program. It represents self contained execution environment with its own memory space, resources
+and state
+
+Threads:
+Threads represent a units of execution within a program. They can run concurrently on multiple cores or be interleaved on a single core.
+A thread is a lightweight unit of execution within a process
+
+Concurrency Vs Parallelism:
+Threads allow for concurrent execution of tasks, while multiple cores enable true parallel processing
+
+JS:
+*)JS, as a language, is single-threaded.
+*)Single-threaded nature of JS applies to both client-side JS running in web browsers & server-side JS in environments like NodeJS
+*)JS provides mechanisms to handle concurrency & asynchronous operations. NodeJS achieves this through it's event-driven, non-blocking
+I/O model & the use of callbacks, promises, and async/await
+
+Event loop:
+*)It's a mechanism provided by programming environments (such as JS in the browser or NodeJS) to manage & coordinate the execution of
+asynchronous tasks
+*)It ensures that tasks are executed in an efficient & non-blocking manner, allowing the program to remain responsive & handle multiple
+concurrent operations
+*)The event loop is a fundamental component of JS's runtime environmen, and Nodejs utilizes the same event loop concept to enable it's
+event-driven, non blocking I/O model
+*)Browser's JS engine, such as V8 in chrome, provides an event loop that handles events, timers, and callbacks in an asynchronous manner
+*)Event loop in the browser environments manages the execution of JS code, handles user interactions, manages timers, and processes
+asynchronous operations
+
+
+Memory: Stack vs Heap memory:
+-------------------------------
+In computer management, the terms stack & heap refer to 2 distinct regions of memory used for different purposes
+Stack:
+------
+*)Stack is a region of memory that is automatically managed by program execution environment
+*)It's organized in LIFO manner, resembling a stack of plates. When a function is called, a new stack frame is created & added to the top
+of stack, containing the function's local variables, parameters, and return address
+*)As functions complete their execution, their stack frames are removed from the stack in reverse order they were added
+*)Stack is used to manage execution context of functions, including function calls, local variables, and the order of function returns
+*)Stack has a fixed size allocated to it, determined by the system or the programming language, and typically has a relatively small
+memory capacity
+Heap:
+-----
+*)Heap is a region of memory used for dynamic memory allocation, managed manually by programmer or a memory management s/m
+*)It's a more flexible memory space that can be dynamically allocated & deallocated as needed during runtime
+*)Heap is used for storing objects or data structures that have a longer lifespan than local variables on the stack, or when the required
+memory size is not known at compile time
+*)Memory allocation in the heap typically involves requesting a specific amount of memory using functions like malloc() or new, and the
+programmer is responsible for explicitly freeing or releasing memory when it's not longer needed to avoid memory leaks
+*)Heap has a larger memory capacity compared to stack, but managing the allocation and deallocation of memory in the heap requires more
+careful attention from the programmer
+
+
+Demo: Call stack exceeded:
+---------------------------
+check index.html where stack size or storage will get exceeded
+
+
+How event loop works?
+----------------------
+check the site http://latentflip.com/loupe/?code=!!!
+check the downloaded file latentflip.com.html
+
+
+Introduction to libuv in NodeJS:
+---------------------------
+libuv is a multi-platform, asynchronous I/O library used by Node.js to handle non-blocking operations. It provides the event loop, 
+handles file system operations, networking, and other asynchronous tasks, allowing Node.js to be efficient and scalable.
+
+
+QUESTION ANSWERS:
+----------
+Q)What is the difference between setTimeout() and setImmediate()?
+an)setTimeout() schedules a callback to be executed after a minimum delay, which is not guaranteed to be exact. setImmediate(), on the 
+other hand, schedules a callback to be executed in the next iteration of the event loop, immediately after the poll phase
+
+Q)Why is libuv important for Node.js?
+an)libuv is crucial for Node.js because it allows the platform to perform non-blocking I/O operations, which is essential for handling 
+multiple requests simultaneously without the need for multiple threads. This non-blocking nature is a key feature of Node.js’s 
+performance and scalability.
+
+Q)What is the relationship between libuv and the Node.js event loop?
+an)The Node.js event loop is implemented and controlled by libuv. The event loop handles different phases, such as timers, pending 
+callbacks, I/O polling, and close callbacks, all managed by libuv. It ensures that asynchronous operations are executed in the right 
+order without blocking the main thread.
+
+Q)What are the phases of the event loop?
+an)
+The event loop operates in several phases, each handling different types of tasks:
+Timers: Executes callbacks scheduled by setTimeout() and setInterval().
+I/O Callbacks: Handles callbacks for I/O operations (e.g., file reads/writes).
+Idle, Prepare: Internal phase used by Node.js to prepare for the next iteration.
+Poll: Retrieves new I/O events; executes callbacks for I/O operations.
+Check: Executes setImmediate() callbacks.
+Close Callbacks: Executes callbacks for close events, such as socket.on('close', callback).
+
+Q)What is a "stack overflow" error?
+an)A stack overflow error occurs when the call stack exceeds its limit, typically due to a function calling itself recursively without a 
+proper base case to terminate the recursion, or deeply nested function calls.
+
+Q)What is the difference between the event loop in a browser and in Node.js?
+an)While the fundamental mechanism of the event loop is similar in both environments, Node.js has additional phases in its event loop to 
+handle I/O operations, timers, and other system tasks, whereas the browser event loop is more focused on handling user interface events, 
+DOM events, and network operations.
