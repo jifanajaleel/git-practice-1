@@ -1,0 +1,20 @@
+<!-- Demo: Call stack exceeded -->
+<html>
+    <head>
+        <script>
+            function buttonClick(i) {
+                console.log("Counter:", i);
+                // buttonClick(i+1);
+                // above commented line will show 'stack size exceeded' if you uncomment it & execution will be haulted. Instead of above line, use below code for unblocking the execution
+                setTimeout(() => {
+                    buttonClick(i+1);
+                }, 0)
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Stack demo</h1>
+        <button onclick="buttonClick(1);">Click here</button>
+        <input type="text"/>
+    </body>
+</html>
