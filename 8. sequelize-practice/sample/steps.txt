@@ -1,0 +1,17 @@
+Steps for : Introduction to sequelize, creating model and retrieving
+---------------------------------------------------------------------
+1)  Database configuration done in dbconfig.js.
+    Imported Sequelize class and created a sequelize object from it. Then we tested the connection
+2)  Created models/models.js.
+    Defined a model from the connected sequelize. Gave all the fields and datatypes.
+    Then synced the table with db
+3)  Created index.js. 
+    Impoted the model.
+    Checked the new record model creation, record retrieval as well
+
+In short,
+    dbconfig.js (connects DB)
+        ↓
+    models.js (uses sequelize) (defines tables)
+        ↓
+    index.js (uses Course model) (runs queries)
