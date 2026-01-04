@@ -38,7 +38,7 @@ Additional createdAt & updatedAt columns will be there.
 
 
 //! Rent a car -------------------------------------------------------------
-// check git-practice-1\sequelize-practice\sample\excel_ss_for_table_creation.png to get to know about all tables and relationships b/w them
+// check git-practice-1\sequelize-practice\1.sample\excel_ss_for_table_creation.png to get to know about all tables and relationships b/w them
 const Manufacturer = sequelize.define("manufacturer", {
     id: {
         type: DataTypes.INTEGER,
