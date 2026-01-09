@@ -1,7 +1,5 @@
 const express = require('express');
 const customerControllers = require('../controllers/customers');
-const Customer = require('../models/customer');
-const { createCustomer } = require('../repositories/customers');
 
 const router = express.Router();
 
