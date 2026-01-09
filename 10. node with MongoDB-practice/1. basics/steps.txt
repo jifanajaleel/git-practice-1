@@ -1,0 +1,12 @@
+NOTE: $ is used before commands for understanding.
+
+1. Go to folder 10. node with MongoDB-practice
+2. Open gitbash or terminal
+3. $ code .
+4. $ npm init
+package.json will get generated
+5. $ npm i express nodemon
+package.json will get updated. packag-lock.json & node_modules folder will get generated
+6. In package.json, update 'scripts' with "start": "nodemon server.js"
+7. Now you can give 'npm start' in terminal to run server.js
+8. You can press ctrl+c to stop running

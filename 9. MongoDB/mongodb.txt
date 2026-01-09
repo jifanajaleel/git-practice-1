@@ -1,0 +1,800 @@
+MongoDB:
+--------
+*) No SQL database
+*) Uses JSON-like documents with optional schemas
+*) RDBMS Vs MongoDB
++----------+------------+
+|  RDBMS   |  MongoDB   |
++----------+------------+
+| Tables   | Collections|
+| Rows     | Documents  |
+| Columns  | Fields     |
++----------+------------+
+Collections similar to Folder
+Documents similar to JSON Files
+
+*) check RDBMS_vs_MondoDB.png
+*) The _id field:
+In MongoDB, each Document stored in a Collection requires a unique _id field that acts as a primary key. If
+an inserted document omits the _id filed, the MongoDB driver automatically generates an ObjectId for the _id
+field. Eg: 507f191e810c19729de860ea
+*) Atlas:
+Atlas is a fully managed cloud database service provided by MongoDB. It allows users to deploy, manage and
+scale MongoDB databases in cloud, without the need for complex infrastructure setup & maintenance. It's paid
+*) 2 Editions:
+Community edition (CE) - free & open source
+Enterprise edition (EE) - paid. Support team will be there in case of any issues
+*) MongoDB Shell (mongosh) & MongoDB Compass:
+In order to connect with Postgres, we use pgAdmin or PSQL commandline tool to interact & use queries.
+lly, MongoDB Shell (mongosh) is a commandline tool. We can use this MongoDB shell to test queries & operations
+directly with our database. MongoDB Compass is similar to pgAdmin. Both mongosh & MongoDB Compass are free.
+Usually Mongosh is used in production. Nobody uses Compass (GUI tools) there. So understand the commands better.
+*) Mongoose:
+A js OOP library that creates connection b/w MongoDB & Node.js javascript runtime environment.
+We can install this using npm. For Postgres, we used 'pg' library.
+If you wanna connect Java or other apps to MongoDB, separate drivers are available
+*) RDBMS Vs MongoDB
++------------+-----------------+
+|   RDBMS    |    MongoDB      |
++------------+-----------------+
+| pgAdmin    | MongoDB Compass |
+| PSQL       | MongoDB Shell   |
+| pg library | mongoose library|
++------------+-----------------+
+*)How to start?
+1) Download & install Mongoose CE. 2) Install Mongosh or Compass
+
+
+Mongosh COMMANDS:
+------------------
++----------------------------------------------------------------------------------------------------------+
+|                                         Commands                                                         |
++----------------------------------------------------------------------------------------------------------+
+| mongosh                                                                                                  |
+| show dbs                                                                                                 |
+| show Collections                                                                                         |
+| exit                                                                                                     |
+| use <db_name>                                                                                            |
+| db                                                                                                       |
+| db.<collection_name>.insertOne({})                                                                       |
+| db.<collection_name>.insertMany([{}, {}])                                                                |
+| db.<collection_name>.find()                                                                              |
+| db.<collection_name>.find({<WHERE_condition>}, {<filed_names>})                                          |
+| db.<collection_name>.find().limit(<limit>)                                                               |
+| db.<collection_name>.find().sort({<sort>:<order>})                                                       |
+| db.<collection_name>.find().skip(<skip_count>)                                                           |
+| db.<collection_name>.find().sort({<sort>:<order>}).skip(<skip_count>).limit(<limit-count>)               |
+| $exists, $eq, $ne, $gt, $gte, $lt, $lte, $in, $nin                                                       |
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$set: {<update_condition>}})                        |
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$inc: {<increment_condition>}})                     |
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$unset: {<unset_condition>}})                       |
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$rename: {<rename_field>}})                         |
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$set: {<update_condition>}}, {upsert: true})        |
+| db.<collection_name>.updateMany({<WHERE_condition>}, {$set: {<update_condition>}})                       |
+| db.<collection_name>.updateMany({<WHERE_condition>}, {$min: {min_condition}})                            |
+| db.<collection_name>.updateMany({<WHERE_condition>}, {$max: {max_condition}})                            |
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$setOnInsert: {<insert_condition>}}, {upsert: true})|
+| db.<collection_name>.updateOne({<WHERE_condition>}, {$currentDate: {<filed_name>: true}})                |
+| db.<collection_name>.deleteMany({<delete_condition>})                                                    |
+| db.<collection_name>.getIndexes()                                                                        |
++----------------------------------------------------------------------------------------------------------+
+
+
+After installation of Compass & Mongosh, open command prompt & type
+*)command 'mongosh'. It'll connect to MongoDB database server
+*)To list databases:
+'show dbs '
+All the databases will be listed in cmd. Same thing can be viewed if you open Compass (i.e All databases can be seen there)
+*)To list collections in current db.
+'show Collections'
+*)In cmd, you can give another command 'exit' to exit from mongosh to normal command prompt. Nothing won't be printed in o/p.
+*)To switch to another database, give command 'use <db_name>'. eg: 'use training_db'.
+o/p->
+    switched to db training_db.
+Here only switching of database happened. training_db database is not yet created. So if you give 'show dbs', training_db will not be listed.
+If we add any Collection or Document under this training_db database, then only this database will be created automatically
+*)If you give 'db' in cmd, the current database where we're standing will be the output
+*)To create a new Collection.
+db.createCollection("people")
+o/p ->
+    { ok: 1 }
+*)To insert data.
+db.<collection_name>.insertOne({})
+Give below command where 'customers' is the Collection name. JSON data to be inserted is {name: "Jifana"}.
+db.customers.insertOne({name: "Jifana})
+o/p will be ->
+    {
+        acknowledged: true,
+        insertedId: ObjectId('695d556e5964ae71a01e2621')
+    }
+*)To get the data inside customers Collection.
+db.customers.find()
+o/p -> 
+    [ { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' } ]
+*)Now if you give 'show dbs', you can see training_db since you've done a few operations in it
+*)Inserting another data into customers Collection.
+db.customers.insertOne({name: "Jumana", place: "Kannur", address: {street: "Irikkur", district: "Kannur"}, hobbies: ["reading", "studying"]})
+o/p ->
+    {
+        acknowledged: true,
+        insertedId: ObjectId('695d57745964ae71a01e2622')
+    }
+*)db.customers.find()
+o/p ->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*) NOTE:
+collection = customers
+document = Each { ... } is one document. eg: { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' }
+field = name, place, address, hobbies
+*)you can refresh Compass and see 'training_db' coming there with a Collection named 'customers'. If you click on customers Collection, you can
+see both records. You can create new Collections by clicking on '+' icon in Compass. Click on 'ADD DATA' to add new json data. I gave below data
+after clicking on 'Insert Document area'.
+    "name": "Jebin",
+    "role": "Admin"
+
+Then type 'Insert'.
+
+In short, both Compass and Mongosh can be used to insert data into database
+
+*)We can insert array of objects into Collection.
+db.customers.insertMany([{name: "Ayzel"}, {name: "Ayrin"}])
+o/p ->
+    {
+        acknowledged: true,
+        insertedIds: {
+            '0': ObjectId('695e20a45964ae71a01e2623'),
+            '1': ObjectId('695e20a45964ae71a01e2624')
+        }
+    }    
+*)If 2 given as limit, only 2 objects will be there in o/p.
+db.customers.find().limit(2)
+o/p ->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)we can sort output by using sort and passing the sorting field inside curly braces. In below, '1' means sorting will happen based on alphabetic
+ascending order.
+db.customers.find().sort({name: 1})
+o/p ->
+    [
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)lly, in order to sort in alphabetic descending order,
+db.customers.find().sort({name: -1})
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        },
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)After sorting objects in name ascending order, the first 2 objects will be skipped & only the 3rd element will be displayed.
+sort, skip & limit can be used independently as well.
+db.customers.find().sort({name: 1}).skip(2).limit(1)
+o/p ->
+    [ { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' } ]
+*)db.customers.find().sort({name: 1}).skip(3)
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)db.customers.find().skip(3)
+o/p ->
+    [ { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' } ]
+*)Using Compass, you can insert many objects. Select any Collection. Then, click on 'options'. You can see 'Sort', 'Skip' & 'Limit' options there. 
+Give values to it & click on 'Find'
+*)Record with name Jifana will be printed.
+db.customers.find({name: "Jifana"})
+o/p ->
+    [ { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' } ]
+*)If I give below command in Mongosh, nothing will be printed since such record does not exist where name & place are matching.
+Here ',' is equivalent to '&'.
+db.customers.find({name: "Jifana", place: "Kannur"})
+*)db.customers.find({place: "Kannur"})
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)Below command is same as above command.
+db.customers.find({place: {$eq: "Kannur"}})
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)To get objects where place is not equual to Kannur.
+db.customers.find({place: {$ne: "Kannur"}})
+o/p ->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)lly, we have below operators:
+$eq -> equal to
+$ne -> not equal to
+$gt -> greater than
+$lt -> less than
+$gte -> greater than or equal to
+$lte -> less than or equal to
+$in -> in
+$nin -> not in
+*)To get the array of objects where place is either Kannur or Kozhikode
+db.customers.find({place: {$in: ["Kannur", "Kozhikode"]}})
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)To get the array of objects where place is neither Kannur nor Kozhikode
+db.customers.find({place: {$nin: ["Kannur", "Kozhikode"]}})
+o/p ->
+[
+  { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+  { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+  { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+]
+*)Record with place Kannur will be printed with name attribute alone. 1st object inside find is for 'WHERE' condition & 2nd object is for
+attributes to be returned (similar to SELECT query).
+(SELECT name from customers WHERE place='Kannur')
+db.customers.find({place: "Kannur"}, {name: 1})
+o/p ->
+    [ { _id: ObjectId('695d57745964ae71a01e2622'), name: 'Jumana' } ]
+*)Record with place Kannur will be printed with name & place attribute alone. It's like 'SELECT name, place FROM customers WHERE place='Kannur'
+query in Postgres.
+db.customers.find({place: "Kannur"}, {name: 1, place: 1})
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur'
+        }
+    ]
+*)If we don't need something, give 0. If we need something, give 1.
+If I don't need id,
+db.customers.find({place: "Kannur"}, {name: 1, place: 1, _id: 0})
+o/p ->
+[ { name: 'Jumana', place: 'Kannur' } ]
+*)If we don't need id alone,
+db.customers.find({place: "Kannur"}, {_id: 0})
+o/p ->
+    [
+        {
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)db.customers.find({}, {_id: 0})
+o/p ->
+    [
+        { name: 'Jifana' },
+        {
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        },
+        { name: 'Ayzel' },
+        { name: 'Ayrin' }
+    ]
+*)db.customers.find({}, {_id: 0, name: 1})
+o/p ->
+    [
+        { name: 'Jifana' },
+        { name: 'Jumana' },
+        { name: 'Ayzel' },
+        { name: 'Ayrin' }
+    ]
+*)To get the object from database where 'place' field exist.
+db.customers.find({place: {$exists: 1}})
+o/p ->
+    [
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Kannur',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ]
+        }
+    ]
+*)To get the object from database where 'place' field does not exist.
+db.customers.find({place: {$exists: 0}})
+o/p ->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)To get the objects where name has 'Ay' anywhere in it.
+db.customers.find({name: /Ay/})
+o/p ->
+    [
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)To get the objects where name has 'ana' anywhere in it.
+db.customers.find({name: /ana/})
+o/p ->
+[
+  { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+  {
+    _id: ObjectId('695d57745964ae71a01e2622'),
+    name: 'Jumana',
+    place: 'Kannur',
+    address: { street: 'Irikkur', district: 'Kannur' },
+    hobbies: [ 'reading', 'studying' ]
+  }
+]
+*)To get the objects where name starts with 'Ji'.
+db.customers.find({name: /^Ji/})
+o/p ->
+[ { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' } ]
+*)SQL SELECT statements  Vs MongoDB find() statements:
+
++--------------------------------------------------------------+-----------------------------------------------------------------+
+|            SQL SELECT statements                             |                 MongoDB find() statements                       |
++--------------------------------------------------------------+-----------------------------------------------------------------+
+| SELECT * FROM people                                         | db.people.find()                                                |
+| SELECT id, userid, status FROM people                        | db.people.find({}, {userid: 1, status: 1})                      |
+| SELECT userid, status FROM people                            | db.people.find({}, {userid: 1, status: 1, _id: 0})              |
+| SELECT * FROM people WHERE status = "A"                      | db.people.find({status: "A"})                                   |
+| SELECT userid, status FROM people WHERE status = "A"         | db.people.find({status: "A"}, {userid: 1, status: 1, _id: 0})   |
+| SELECT * FROM people WHERE status != "A"                     | db.people.find({status: {$ne: "A"}})                            |
+| SELECT * FROM people WHERE status = "A" AND age = 50         | db.people.find({status: "A", age: 50})                          |
+| SELECT * FROM people WHERE status = "A" OR age = 50          | db.people.find({$or: [{status: "A"}, {age: 50}]})               |
+| SELECT * FROM people WHERE age > 25                          | db.people.find({age: {$gt: 25}})                                |
+| SELECT * FROM people WHERE age > 25 AND age <= 50            | db.people.find({age: {$gt: 25, $lte: 50}})                      |
+| SELECT * FROM people WHERE user_id like "%bc%"               | db.people.find({user_id: /bc/})                                 |
+| SELECT * FROM people WHERE user_id like "%bc%"               | db.people.find({user_id: {$regex: /bc/}})                       | -> alternative regular expression method
+| SELECT * FROM people WHERE user_id like "bc%"                | db.people.find({user_id: /^bc/})                                |
+| SELECT * FROM people WHERE user_id like "bc%"                | db.people.find({user_id: {$regex: /^bc/}})                      | -> alternative regular expression method
+| SELECT * FROM people WHERE status = "A" ORDER BY user_id ASC | db.people.find({status: "A"}).sort({user_id: 1})                |
+| SELECT * FROM people WHERE status = "A" ORDER BY user_id DESC| db.people.find({status: "A"}).sort({user_id: -1})               |
+| SELECT COUNT(*) FROM people                                  | db.people.count()                                               |
+| SELECT COUNT(user_id) FROM people                            | db.people.count({user_id: {$exists: true}})                     |
+| SELECT COUNT(*) FROM people WHERE age > 30                   | db.people.count({age: {$gt: 30}})                               |
+| SELECT COUNT(*) FROM people WHERE age > 30                   | db.people.find({age: {$gt: 30}}).count()                        | -> alternative method
+| UPDTAE people SET status="C" WHERE age>25                    | db.people.updateMany({age: {$gt: 25}}, {$set: {status: "C"}})   |
+| UPDTAE people SET age=age+3 WHERE status="A"                 | db.people.updateMany({status: "A"}, {$inc: {age: 3}})           |
+| DELETE from people WHERE status="D"                          | db.people.deleteMany({status: "D"})                             |
+| DELETE from people                                           | db.people.deleteMany({})                                        |
++--------------------------------------------------------------+-----------------------------------------------------------------+
+
+*)To update place field in the object where 'name' is 'Jumana'. The first curly braces is for finding the data & 2nd braces is for updation condition.
+Note that 'updateOne' will only update 1 record where 'name' is matching with 'Jumana'.
+db.customers.updateOne({name: "Jumana"}, {$set: {place: "Saudi"}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.updateOne({name: "Jumana"}, {$set: {place: "Saudi", age: 30}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find()
+o/p->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Saudi',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ],
+            age: 30
+        },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)To increment an integer. In order to decrement, you can give negative values. If you give -4, age would be 26. 
+db.customers.updateOne({name: "Jumana"}, {$inc: {age: 4}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find()
+o/p->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Saudi',
+            address: { street: 'Irikkur', district: 'Kannur' },
+            hobbies: [ 'reading', 'studying' ],
+            age: 34
+        },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)db.customers.updateOne({name: "Jumana"}, {$unset: {address: "", hobbies: ""}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find()
+o/p->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            place: 'Saudi',
+            age: 34
+        },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)db.customers.updateOne({name: "Jumana"}, {$rename: {"place": "location"}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find()
+o/p->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            age: 34,
+            location: 'Saudi'
+        },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)To insert a field. If the field doesn't exist, it creates a new one. upsert:true means update or insert.
+db.customers.updateOne({"name": "Jumana"}, {$set: {new_age: 40, age: 31}}, {upsert: true})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find()
+o/p->
+    [
+        { _id: ObjectId('695d556e5964ae71a01e2621'), name: 'Jifana' },
+        {
+            _id: ObjectId('695d57745964ae71a01e2622'),
+            name: 'Jumana',
+            age: 31,
+            location: 'Saudi',
+            new_age: 40
+        },
+        { _id: ObjectId('695e20a45964ae71a01e2623'), name: 'Ayzel' },
+        { _id: ObjectId('695e20a45964ae71a01e2624'), name: 'Ayrin' }
+    ]
+*)To match documents without the age field & adds status: "active" to all matched documents.
+db.customers.updateMany({age: {$exists: false}}, {$set: {status: "active"}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 3,
+        modifiedCount: 3,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active' },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 40 },
+        { name: 'Ayzel', status: 'active' },
+        { name: 'Ayrin', status: 'active' }
+    ]
+*)db.customers.updateMany({age: {$exists: true}}, {$inc: {new_age: -4}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active' },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 36 },
+        { name: 'Ayzel', status: 'active' },
+        { name: 'Ayrin', status: 'active' }
+    ]
+*)$min updates only when the provided value is smaller. Here min condition is 34 & current value is 36. So new_age will get updated to 34.
+db.customers.updateMany({new_age: {$exists: true}}, {$min: {new_age: 34}})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active' },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 34 },
+        { name: 'Ayzel', status: 'active' },
+        { name: 'Ayrin', status: 'active' }
+    ]
+*)Here $min does not update new_age since the condition is 40 & current value is 34(which is lesser).
+db.customers.updateMany({new_age: {$exists: true} }, {$min: {new_age: 40} })
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active' },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 34 },
+        { name: 'Ayzel', status: 'active' },
+        { name: 'Ayrin', status: 'active' }
+    ]
+*)To update a field only if the new value is GREATER than the existing value.
+db.customers.updateMany({ new_age: {$exists: true} }, {$max: {new_age: 45} })
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active' },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        { name: 'Ayzel', status: 'active' },
+        { name: 'Ayrin', status: 'active' }
+    ]
+*)db.customers.updateMany({ new_age: {$exists: true} }, {$max: {new_age: 34} })
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active' },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        { name: 'Ayzel', status: 'active' },
+        { name: 'Ayrin', status: 'active' }
+    ]
+*)db.customers.updateMany({}, {$max: {age: 18} })
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 4,
+        modifiedCount: 3,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active', age: 18 },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        { name: 'Ayzel', status: 'active', age: 18 },
+        { name: 'Ayrin', status: 'active', age: 18 }
+    ]
+*)$setOnInsert :“Set this field ONLY when a new document is created”. It does NOT run when updating an existing document.
+And it works only with upsert: true.
+If customer does not exist, create it and set createdAt.
+db.customers.updateOne({name: "Sara"}, {$setOnInsert: {createdAt: new Date()} }, {upsert: true})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: ObjectId('695f776165fd1cafb5f19ec8'),
+        matchedCount: 0,
+        modifiedCount: 0,
+        upsertedCount: 1
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active', age: 18 },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        { name: 'Ayzel', status: 'active', age: 18 },
+        { name: 'Ayrin', status: 'active', age: 18 },
+        { name: 'Sara', createdAt: ISODate('2026-01-08T09:22:41.365Z') }
+    ]
+*)If customer already exists, do nothing extra. $setOnInsert is ignored. createdAt is NOT overwritten.
+db.customers.updateOne({name: "Sara"}, {$setOnInsert: {status: "not active"} }, {upsert: true})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 0,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        { name: 'Jifana', status: 'active', age: 18 },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        { name: 'Ayzel', status: 'active', age: 18 },
+        { name: 'Ayrin', status: 'active', age: 18 },
+        { name: 'Sara', createdAt: ISODate('2026-01-08T09:22:41.365Z') }
+    ]
+*)Add $set to see the difference clearly.
+db.customers.updateOne(
+  { name: "Sara" },
+  {
+    $set: { location: "India" },
+    $setOnInsert: { createdAt: new Date() }
+  },
+  { upsert: true }
+)
+
++--------------------+----------------------------+
+|     Situation      |        What happens        |
++--------------------+----------------------------+
+| New document       |  location + createdAt set  |
+| Existing document  |  Only location updated     |
++--------------------+----------------------------+
+
+*)To set lastUpdated to current date & time. We don't need to pass any values in here.
+db.customers.updateOne({ name: "Jifana" }, {$currentDate: {lastUpdated: true} })
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        {
+            name: 'Jifana',
+            status: 'active',
+            age: 18,
+            lastUpdated: ISODate('2026-01-08T09:37:49.652Z')
+        },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        { name: 'Ayzel', status: 'active', age: 18 },
+        { name: 'Ayrin', status: 'active', age: 18 },
+        { name: 'Sara', createdAt: ISODate('2026-01-08T09:22:41.365Z') }
+    ]
+*)db.customers.updateOne({name: "Ayzel"}, {$currentDate: {lastUpdated: {$type: "timestamp"} }})
+o/p->
+    {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+    }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        {
+            name: 'Jifana',
+            status: 'active',
+            age: 18,
+            lastUpdated: ISODate('2026-01-08T09:37:49.652Z')
+        },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        {
+            name: 'Ayzel',
+            status: 'active',
+            age: 18,
+            lastUpdated: Timestamp({ t: 1767865453, i: 1 })
+        },
+        { name: 'Ayrin', status: 'active', age: 18 },
+        { name: 'Sara', createdAt: ISODate('2026-01-08T09:22:41.365Z') }
+    ]
+*)db.customers.deleteMany({name: "Sara"})
+o/p->
+    { acknowledged: true, deletedCount: 1 }
+*)db.customers.find({}, {_id: 0})
+o/p->
+    [
+        {
+            name: 'Jifana',
+            status: 'active',
+            age: 18,
+            lastUpdated: ISODate('2026-01-08T09:37:49.652Z')
+        },
+        { name: 'Jumana', age: 31, location: 'Saudi', new_age: 45 },
+        {
+            name: 'Ayzel',
+            status: 'active',
+            age: 18,
+            lastUpdated: Timestamp({ t: 1767865453, i: 1 })
+        },
+        { name: 'Ayrin', status: 'active', age: 18 }
+    ]
+*)INDEXES:
+-----------
+Indexes support the efficient execution of queries in MongoDB. Without indexes, MongoDB must perform a collection scan, i.e, scan every document
+in a collection, to select those documents that match the query statement.
+*)db.customers.getIndexes()
+o/p->
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+
+*) Now go & check the folder '10. node with MongoDB-practice' where code is present
