@@ -1,9 +1,11 @@
 //! Connecting nodejs application to mongodb
+//! Handling relationship using mongoose
 
 const express = require('express');
 const mongoose = require('mongoose');
 
 const customerRoutes = require('./routes/customers');
+const productsRoutes = require('./routes/products');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
@@ -22,6 +24,7 @@ database.once('connected', () => {
 
 app.use(express.json());
 app.use('/api/customers', customerRoutes);
+app.use('/api/products', productsRoutes);
 
 app.listen(PORT, () => {
     console.log("Server is waiting for requests. Port:", PORT);

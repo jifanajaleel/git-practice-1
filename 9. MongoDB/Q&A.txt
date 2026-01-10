@@ -1,0 +1,474 @@
+Q)How does MongoDB handle relationships between data?
+an)MongoDB typically handles relationships using either embedding (storing related data within the same document) or
+referencing (linking documents across collections using references). Embedding is suitable for one-to-few relationships,
+while referencing is used for more complex, one-to-many, or many-to-many relationships.
+
+Q)What is the difference between MongoDB and a traditional SQL database?
+an)The main difference is that MongoDB is a NoSQL database, meaning it does not use tables, rows, and columns like SQL databases.
+Instead, it uses collections and documents. MongoDB is schema-less, allowing more flexibility, while SQL databases enforce a
+fixed schema, which provides structure and consistency.
+
+Q)How do you insert a single document into a MongoDB collection using mongosh?
+an)Open mongosh and connect to your database.
+Switch to the desired database using the command: use myDatabase.
+Insert a document into a collection using the insertOne() method.
+db.myCollection.insertOne({ name: "John Doe", age: 30, city: "New York" });
+
+Q)What command in mongosh fetches a single document from a collection?
+an)You can use the findOne() method to fetch a single document.
+db.myCollection.findOne({ name: "John Doe" });
+This command returns the first document that matches the query.
+
+Q)How do you delete a document in mongosh?
+an)Use the deleteOne() or deleteMany() method in mongosh to remove documents from a collection:
+db.myCollection.deleteOne({ name: "John Doe" });
+This command deletes the first document that matches the query. To delete multiple documents, use:
+db.myCollection.deleteMany({ age: { $lt: 30 } });
+
+Q)How do you use insertMany() in mongosh to insert multiple documents?
+an)Open mongosh and connect to your database.
+Use the following command to insert multiple documents:
+db.myCollection.insertMany([
+{ name: "Alice", age: 25, city: "Los Angeles" },
+{ name: "Bob", age: 28, city: "San Francisco" },
+{ name: "Charlie", age: 35, city: "Chicago" }
+]);
+This command inserts all three documents into myCollection.
+
+Q)How do you use limit(), skip(), and sort() together in MongoDB Compass?
+an)Retrieve your documents using any filters or queries.
+Set the "Sort" field to determine the order of the results.
+Use the "Skip" field to bypass a specific number of documents.
+Set the "Limit" field to restrict the number of documents displayed.
+Apply all settings to view the sorted, paginated results.
+
+Q)How do you apply the limit() method in mongosh to fetch a specific number of documents?
+an)Use the limit() method after a find() query to specify the maximum number of documents to return. For example:
+db.myCollection.find().limit(3);
+This command returns the first three documents in the collection.
+
+Q)What is the skip() method, and when would you use it?
+an)The skip() method is used to bypass a specific number of documents in a query result. It’s often used in conjunction with
+limit() for pagination, allowing you to skip over a certain number of documents and then retrieve the next set.
+
+Q)How do you write a basic where clause in mongosh to fetch documents based on a single field?
+an)You can use the find() method with a simple query object. For example, to fetch documents where the city is "New York":
+db.myCollection.find({ city: "New York" });
+This query returns all documents where the city field is "New York".
+
+Q)What is an index in MongoDB?
+an)An index in MongoDB is a special data structure that improves the speed of data retrieval operations on a collection. Indexes
+store a small portion of the collection's data in a form that's easy to traverse, allowing MongoDB to efficiently find and return
+documents that match a query.
+
+Q)Why are indexes important in MongoDB?
+an)Indexes are important because they significantly enhance the performance of queries. Without indexes, MongoDB must perform a
+full collection scan, examining every document to find the ones that match the query criteria. This can be slow, especially for
+large collections. Indexes allow MongoDB to quickly locate the data without scanning the entire collection.
+
+Q)What is the default index created in every MongoDB collection?
+an)Every MongoDB collection has a default index on the _id field, which is automatically created when the collection is created.
+This index ensures that each document in the collection has a unique identifier, allowing for efficient retrieval of documents by
+their _id.
+
+Q)What is a Document in MongoDB?
+an)A document in MongoDB is a record in a collection, represented in a JSON-like format known as BSON (Binary JSON). Each
+document contains key-value pairs, similar to a JSON object, and can have a different structure from other documents in the
+same collection.
+
+Q)How do you fetch all documents from a collection using mongosh?
+an)Connect to your database and select the correct database.
+Use the find() method to retrieve all documents from a collection:
+db.myCollection.find();
+To format the output for better readability, use the pretty() method:
+db.myCollection.find().pretty();
+
+Q)How do you use logical operators like $and, $or, and $not in a where clause in mongosh?
+an)$and: To combine multiple conditions that all must be true:
+
+db.myCollection.find({ $and: [{ city: "New York" }, { age: { $gt: 25 } }] });
+
+$or: To match documents that satisfy at least one condition:
+
+db.myCollection.find({ $or: [{ city: "New York" }, { age: { $gt: 25 } }] });
+$not: To negate a condition:
+
+db.myCollection.find({ age: { $not: { $gt: 25 } } });
+These operators allow for more complex queries that involve multiple criteria.
+
+Q)How do you use the $in operator in a where clause to match multiple values?
+an)The $in operator allows you to match any value within an array. For example, to find documents where the city is either
+"New York" or "Los Angeles":
+db.myCollection.find({ city: { $in: ["New York", "Los Angeles"] } });
+
+This query returns documents where the city is either "New York" or "Los Angeles".
+
+Q)What does the $eq operator do in MongoDB?
+an)The $eq operator in MongoDB matches documents where the value of a field is equal to the specified value. For example, to find
+documents where age is exactly 25:
+db.myCollection.find({ age: { $eq: 25 } });
+This query returns all documents where the age field is 25.
+
+Q)How do you use the $gt operator in MongoDB, and what does it do?
+an)The $gt operator is used to find documents where the value of a field is greater than a specified value. For example, to find
+documents where age is greater than 30:
+db.myCollection.find({ age: { $gt: 30 } });
+This query returns documents where the age field is greater than 30.
+
+Q)How does the $nin operator differ from $in, and when would you use it?
+an)The $nin operator is the opposite of $in; it matches documents where a field's value is not within a specified array of values.
+For example, to find documents where color is neither "red" nor "blue":
+db.myCollection.find({ color: { $nin: ["red", "blue"] } });
+This query returns documents where the color field is neither "red" nor "blue".
+
+Q)What is the equivalent of a SELECT * FROM table query in MongoDB?
+an)In MongoDB, the equivalent query to SELECT * FROM table is:
+db.collection.find({});
+This command retrieves all documents from the specified collection.
+
+Q)How do you select specific fields from a table in MongoDB, similar to SELECT column1, column2 FROM table in SQL?
+an)To select specific fields in MongoDB, you use the find() method with a projection. For example, the equivalent of
+SELECT column1, column2 FROM table is:
+db.collection.find({}, { column1: 1, column2: 1 });
+This retrieves only the specified fields (column1 and column2) from the documents.
+
+Q)How do you perform a WHERE clause in MongoDB that is equivalent to SELECT * FROM table WHERE column = value in SQL?
+an)db.collection.find({ column: value });
+
+Q)How do you use the AND operator in MongoDB, similar to SELECT * FROM table WHERE column1 = value1 AND column2 = value2 in SQL?
+an)db.collection.find({ column1: value1, column2: value2 });
+MongoDB implicitly applies an AND operation when you specify multiple conditions in the query object.
+
+Q)How do you use the OR operator in MongoDB, similar to SELECT * FROM table WHERE column1 = value1 OR column2 = value2 in SQL?
+an)db.collection.find({ $or: [{ column1: value1 }, { column2: value2 }] });
+
+Q)What is the MongoDB equivalent of SELECT * FROM table WHERE column IS NULL in SQL?
+an)db.collection.find({ column: null });
+
+Q)How do you perform a SELECT * FROM table WHERE column IS NOT NULL query in MongoDB?
+an)db.collection.find({ column: { $ne: null } });
+
+Q)How do you perform a SELECT * FROM table WHERE column IN (value1, value2, value3) query in MongoDB?
+an)db.collection.find({ column: { $in: [value1, value2, value3] } });
+
+Q)How do you translate the SQL query SELECT * FROM table WHERE column BETWEEN value1 AND value2 to MongoDB?
+an)db.collection.find({ column: { $gte: value1, $lte: value2 } });
+This retrieves documents where the specified column's value is between value1 and value2, inclusive.
+
+Q)What is the MongoDB equivalent of SELECT * FROM table WHERE column LIKE 'pattern%' in SQL?
+an)db.collection.find({ column: { $regex: '^pattern' } });
+
+Q)How do you perform a SELECT DISTINCT column FROM table query in MongoDB?
+an)db.collection.distinct('column');
+This returns an array of distinct values for the specified field in the collection.
+
+Q)How do you count the number of documents matching a specific condition in MongoDB, similar to SELECT COUNT(*) FROM table
+WHERE column = value in SQL?
+an)db.collection.find({ column: value }).count();
+
+Q)What is the MongoDB equivalent of UPDATE table SET column = value WHERE condition in SQL?
+an)db.collection.updateMany({ condition }, { $set: { column: value } });
+
+Q)How do you delete documents in MongoDB based on a condition, similar to DELETE FROM table WHERE condition in SQL?
+an)db.collection.deleteMany({ condition });
+
+Q)What are the primary methods for updating records in MongoDB?
+an)MongoDB provides several methods to update records, including:
+updateOne(): Updates a single document that matches the filter.
+updateMany(): Updates multiple documents that match the filter.
+replaceOne(): Replaces an entire document that matches the filter.
+findOneAndUpdate(): Finds a single document and updates it, returning the original or updated document.
+
+Q)How do you use updateOne() in mongosh to update a single document?
+an)
+Use the updateOne() method with a filter and an update document. For example, to update the age of a user named "Alice":
+javascript
+Copy code
+db.users.updateOne(
+{ name: "Alice" },
+{ $set: { age: 26 } }
+);
+
+This command updates the first document where name is "Alice", setting the age to 26.
+
+Q)How do you use updateMany() in mongosh to update multiple documents?
+an)
+Use the updateMany() method with a filter and an update document. For example, to increment the age of all users in
+"New York" by 1:
+
+db.users.updateMany(
+{ city: "New York" },
+{ $inc: { age: 1 } }
+);
+
+This command updates all documents where city is "New York", incrementing the age field by 1.
+
+Q)What is the purpose of the $set operator in MongoDB updates?
+an)The $set operator is used to update the value of a specific field in a document. If the field does not exist, $set will add
+it to the document. For example:
+
+db.users.updateOne(
+{ name: "Bob" },
+{ $set: { email: "bob@example.com" } }
+);
+
+This adds or updates the email field for the user named "Bob".
+
+Q)How do you remove a field from a document using MongoDB?
+an)Use the $unset operator to remove a field from a document. For example, to remove the phone field from a user named "Charlie":
+
+db.users.updateOne(
+{ name: "Charlie" },
+{ $unset: { phone: "" } }
+);
+
+This removes the phone field from Charlie’s document.
+
+Q)How can you increment a numerical field in MongoDB?
+an)Use the $inc operator to increment (or decrement) a numerical field. For example, to increase the score of a user named
+"David" by 10:
+
+db.users.updateOne(
+{ name: "David" },
+{ $inc: { score: 10 } }
+);
+
+This adds 10 to David’s current score.
+
+Q)How do you add an element to an array field in MongoDB?
+an)Use the $push operator to add an element to an array field. For example, to add a new hobby to Alice’s hobbies array:
+
+db.users.updateOne(
+{ name: "Alice" },
+{ $push: { hobbies: "cycling" } }
+);
+
+This adds "cycling" to Alice’s hobbies array.
+
+Q)How do you add multiple elements to an array field in a single update operation?
+an)Use the $addToSet operator with the $each modifier to add multiple unique elements. For example:
+
+db.users.updateOne(
+{ name: "Bob" },
+{ $addToSet: { hobbies: { $each: ["reading", "gaming"] } } }
+);
+
+This adds "reading" and "gaming" to Bob’s hobbies array if they aren’t already present.
+
+Q)What is an upsert in MongoDB, and how do you perform one?
+an)An upsert is an update operation that inserts a new document if no document matches the filter criteria. To perform an
+upsert, set the upsert option to true. For example:
+
+db.users.updateOne(
+{ name: "Eve" },
+{ $set: { age: 29, city: "Boston" } },
+{ upsert: true }
+);
+
+If a user named "Eve" exists, her age and city are updated. If not, a new document is created with these fields.
+
+Q)How do you delete all documents from a collection in MongoDB?
+an)Use the deleteMany() method with an empty filter {} to delete all documents from a collection. For example:
+
+db.users.deleteMany({});
+
+This command deletes all documents in the users collection.
+
+Q)What happens if you try to delete a document that doesn’t exist in MongoDB?
+an)If you attempt to delete a document that doesn’t exist, MongoDB will not delete anything, and the operation will succeed
+without errors. For deleteOne(), the deleted count will be 0.
+
+Q)Is there a way to retrieve the deleted document in MongoDB after using deleteOne() or deleteMany()?
+an)By default, deleteOne() and deleteMany() do not return the deleted documents. However, you can use the findOneAndDelete()
+method, which deletes a single document and returns the deleted document. For example:
+
+db.users.findOneAndDelete({ name: "Alice" });
+
+This command deletes the first document where name is "Alice" and returns the deleted document.
+
+Q)How do you drop an entire collection in MongoDB, and what is the effect?
+an)To drop an entire collection (which removes all documents and the collection itself), use the drop() method. For example:
+
+db.users.drop();
+
+This command deletes all documents in the users collection and removes the collection from the database.
+
+Q)Can you undo a delete operation in MongoDB?
+an)MongoDB does not provide a built-in way to undo a delete operation. Once a document or collection is deleted, it cannot be
+recovered unless you have a backup or use a replica set with delayed replication to restore the data.
+
+Q)How do indexes affect write operations in MongoDB?
+an)Indexes can slow down write operations (inserts, updates, deletes) because MongoDB must update the indexes each time the data
+changes. While indexes improve read performance, they add overhead to write operations due to the need to maintain the index data
+structures.
+
+Q)What is the unique property of an index in MongoDB?
+an)The unique property of an index enforces uniqueness for the indexed fields across the documents in the collection. For example,
+to create a unique index on the email field:
+db.users.createIndex({ email: 1 }, { unique: true });
+This ensures that no two documents can have the same email value.
+
+Q)How do you list all indexes on a MongoDB collection named users?
+an)db.users.getIndexes();
+
+Q)How do you create a new record in MongoDB using Mongoose?
+an)
+To create a new record, you can use the save() method on a model instance or the create() method directly on the model. For example:
+const user = new User({ name: 'John', age: 30, email: 'john@example.com' });
+user.save()
+.then(() => console.log('User created'))
+.catch(err => console.error('Error creating user', err));
+
+Or using create():
+
+User.create({ name: 'John', age: 30, email: 'john@example.com' })
+.then(user => console.log('User created:', user))
+.catch(err => console.error('Error creating user', err));
+
+Q)What is the difference between the save() and create() methods in Mongoose?
+an)save(): This method is used on an instance of a Mongoose model. It first creates an instance, allowing you to modify the data
+before saving it to the database.
+create(): This method is a shorthand for creating and saving a document in one step. It directly creates a new document in the
+database without requiring an instance to be created first.
+
+Q)How do you handle validation errors when creating a record with Mongoose?
+an)Validation errors can be handled in the catch block when using save() or create(). Mongoose automatically validates documents
+before saving them to the database.
+
+const user = new User({ name: 'John', age: -5, email: 'john@example.com' });
+user.save()
+.catch(err => {
+if (err.name === 'ValidationError') {
+console.error('Validation error:', err.message);
+} else {
+console.error('Error creating user', err);
+}
+});
+
+Q)How do you update a record in MongoDB using Mongoose?
+an)You can update a record using methods like updateOne(), updateMany(), findByIdAndUpdate(), or findOneAndUpdate(). For example,
+to update a user's email:
+
+User.updateOne({ _id: userId }, { email: 'newemail@example.com' })
+.then(() => console.log('User updated'))
+.catch(err => console.error('Error updating user', err));
+
+Or using findByIdAndUpdate():
+User.findByIdAndUpdate(userId, { email: 'newemail@example.com' }, { new: true })
+.then(user => console.log('Updated user:', user))
+.catch(err => console.error('Error updating user', err));
+
+Q)What does the { new: true } option do in the findByIdAndUpdate() method?
+an)The { new: true } option ensures that the method returns the updated document rather than the original one before the update.
+Without this option, Mongoose returns the document as it was before the update.
+
+Q)How do you update multiple records at once using Mongoose?
+an)To update multiple records, use the updateMany() method. For example, to update the age of all users named "John":
+
+User.updateMany({ name: 'John' }, { age: 35 })
+.then(result => console.log('Records updated:', result.nModified))
+.catch(err => console.error('Error updating records', err));
+
+Q)How do you delete a record in MongoDB using Mongoose?
+an)You can delete a record using methods like deleteOne(), deleteMany(), findByIdAndDelete(), or findOneAndDelete().
+For example, to delete a user by ID:
+
+User.deleteOne({ _id: userId })
+.then(() => console.log('User deleted'))
+.catch(err => console.error('Error deleting user', err));
+
+Or using findByIdAndDelete():
+User.findByIdAndDelete(userId)
+.then(() => console.log('User deleted'))
+.catch(err => console.error('Error deleting user', err));
+
+Q)What is the difference between deleteOne() and findByIdAndDelete() in Mongoose?
+an)deleteOne(): Deletes a single document that matches the specified filter but does not return the deleted document.
+findByIdAndDelete(): Finds a document by its ID and deletes it, returning the deleted document if found.
+
+Q)Can you chain multiple Mongoose methods when updating or deleting records? How?
+an)Yes, you can chain Mongoose methods using promises or async/await. For example, to update a user's email and then delete
+another user by ID:
+
+User.findByIdAndUpdate(userId, { email: 'newemail@example.com' }, { new: true })
+.then(user => {
+console.log('Updated user:', user);
+return User.findByIdAndDelete(anotherUserId);
+})
+.then(() => console.log('Another user deleted'))
+.catch(err => console.error('Error in update or delete operation', err));
+
+This chains the update and delete operations together.
+
+Q)What is the purpose of refactoring a Node.js application into controllers, services, and repositories?
+an)Refactoring an application into controllers, services, and repositories helps organize the codebase, making it more modular,
+easier to maintain, and scalable. This separation of concerns ensures that each part of the application has a single
+responsibility, improving testability and readability.
+
+Q)What is a service in a Node.js application?
+an)A service in a Node.js application contains the business logic. It processes data, applies business rules, and performs
+actions such as calculations or transformations. Services are typically invoked by controllers and interact with repositories to
+retrieve or persist data.
+
+Q)How do you create and store a complex document in MongoDB using Mongoose?
+an)To create and store a complex document, you instantiate a Mongoose model with a nested structure and save it to the database.
+Example:
+
+const user = new User({
+name: 'John Doe',
+age: 30,
+email: 'john@example.com',
+addresses: [
+{ street: '123 Main St', city: 'New York', zipCode: '10001' },
+{ street: '456 Elm St', city: 'Boston', zipCode: '02101' }
+]
+});
+
+user.save()
+.then(() => console.log('User with addresses saved'))
+.catch(err => console.error('Error saving user:', err));
+
+Q)What is the benefit of using embedded documents in MongoDB?
+an)Embedded documents allow you to store related data together in a single document, which can improve read performance by
+reducing the need for joins or separate queries. It also makes the data structure more intuitive for certain types of
+hierarchical or nested data.
+
+Q)What is the difference between embedding documents and using references in MongoDB?
+an)Embedding Documents: Stores related data together in the same document, which is efficient for read operations and keeps
+related data localized.
+Using References: Stores related data in separate documents and links them using references (ObjectIds). This is more flexible
+and can handle large or frequently changing data more efficiently.
+
+Q)What is the impact of storing large complex documents in MongoDB?
+an)Storing large complex documents can lead to performance issues, such as increased memory usage, slower queries, and
+challenges with updating large documents. MongoDB has a document size limit of 16 MB, so it’s important to design documents
+thoughtfully and consider breaking down very large documents into smaller, related ones if necessary.
+
+Q)What are the main types of relationships you can model in Mongoose?
+an)The main types of relationships you can model in Mongoose are:
+One-to-One: One document is related to one other document.
+One-to-Many: One document is related to multiple documents.
+Many-to-Many: Multiple documents are related to multiple other documents.
+
+Q)How do you represent a One-to-One relationship in Mongoose?
+an)A One-to-One relationship in Mongoose is typically represented by storing a reference (ObjectId) to another document within
+a field of the schema. Example:
+
+const userSchema = new mongoose.Schema({
+name: String,
+profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }
+});
+
+const profileSchema = new mongoose.Schema({
+bio: String,
+user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+});
+
+Q)How do you use the populate() method in Mongoose to handle relationships?
+an)The populate() method is used in Mongoose to automatically replace referenced ObjectIds with the actual documents from the
+referenced collection. Example:
+
+Student.findById(studentId)
+.populate('courses')
+.then(student => console.log(student))
+.catch(err => console.error('Error populating courses:', err));
