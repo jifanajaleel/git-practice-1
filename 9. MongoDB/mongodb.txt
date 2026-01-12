@@ -1,7 +1,7 @@
 MongoDB:
 --------
 *) No SQL database
-*) Uses JSON-like documents with optional schemas
+*) Uses JSON-like documents with optional schemas. It's called BSON
 *) RDBMS Vs MongoDB
 +----------+------------+
 |  RDBMS   |  MongoDB   |
@@ -12,6 +12,14 @@ MongoDB:
 +----------+------------+
 Collections similar to Folder
 Documents similar to JSON Files
+
+*)Inside a collection, documents will be available in BSON format.
++-------------------------+------------------------------------------+----------------------------------------------------+
+| JS Object               |     Used inside JS code                  | {name: "Hana", age: 25}                            |
+| JSON                    |     Data format for APIs & communication | {"name": "Hana", "age": 25}                        | 
+| BSON(Binary JSON)       |     Binary format used by MongoDB        | {_id: ObjectId("abc123"), name: "Hana", age: 25}   |
++-------------------------+------------------------------------------+----------------------------------------------------+
+!!!We write JS objects. MongoDB stores BSON!!!
 
 *) check RDBMS_vs_MondoDB.png
 *) The _id field:
@@ -44,6 +52,15 @@ If you wanna connect Java or other apps to MongoDB, separate drivers are availab
 *)How to start?
 1) Download & install Mongoose CE. 2) Install Mongosh or Compass
 
+*)
++--------------------+--------------------+
+|  Mongosh Commands  |   PSQL Commands    |
++--------------------+--------------------+
+|  find()            |      SELECT        |
+|  insertMany()      |      POST          |
+|  updateMany()      |      PUT           |
+|  deleteMany()      |      DELETE        |
++--------------------+--------------------+ 
 
 Mongosh COMMANDS:
 ------------------
@@ -51,11 +68,12 @@ Mongosh COMMANDS:
 |                                         Commands                                                         |
 +----------------------------------------------------------------------------------------------------------+
 | mongosh                                                                                                  |
-| show dbs                                                                                                 |
-| show Collections                                                                                         |
 | exit                                                                                                     |
+| show dbs                                                                                                 |
 | use <db_name>                                                                                            |
 | db                                                                                                       |
+| db.createCollection("<collection_name>")                                                                 |
+| show Collections                                                                                         |
 | db.<collection_name>.insertOne({})                                                                       |
 | db.<collection_name>.insertMany([{}, {}])                                                                |
 | db.<collection_name>.find()                                                                              |
@@ -79,7 +97,6 @@ Mongosh COMMANDS:
 | db.<collection_name>.getIndexes()                                                                        |
 +----------------------------------------------------------------------------------------------------------+
 
-
 After installation of Compass & Mongosh, open command prompt & type
 *)command 'mongosh'. It'll connect to MongoDB database server
 *)To list databases:
@@ -100,7 +117,7 @@ o/p ->
     { ok: 1 }
 *)To insert data.
 db.<collection_name>.insertOne({})
-Give below command where 'customers' is the Collection name. JSON data to be inserted is {name: "Jifana"}.
+Give below command where 'customers' is the Collection name. JSON-like JS object to be inserted is {name: "Jifana"}. It'll be stored as BSON.
 db.customers.insertOne({name: "Jifana})
 o/p will be ->
     {
@@ -416,6 +433,18 @@ o/p ->
 | DELETE from people                                           | db.people.deleteMany({})                                        |
 +--------------------------------------------------------------+-----------------------------------------------------------------+
 
+
+*)
+updateOne / updateMany:
++------------------------+----------------------------------+
+| WHERE conditions       |  UPDATE conditions               |
++------------------------+----------------------------------+
+| $eq, $neq              |    $set, $unset, $setOnInsert    |
+| $in, $nin              |    $min, $max                    |
+| $exists                |    $inc                          |
+| $gt, $gte, $lt, $lte   |    $rename                       |
++------------------------+----------------------------------+
+
 *)To update place field in the object where 'name' is 'Jumana'. The first curly braces is for finding the data & 2nd braces is for updation condition.
 Note that 'updateOne' will only update 1 record where 'name' is matching with 'Jumana'.
 db.customers.updateOne({name: "Jumana"}, {$set: {place: "Saudi"}})
@@ -659,6 +688,7 @@ o/p->
         { name: 'Ayzel', status: 'active', age: 18 },
         { name: 'Ayrin', status: 'active', age: 18 }
     ]
+
 *)$setOnInsert :“Set this field ONLY when a new document is created”. It does NOT run when updating an existing document.
 And it works only with upsert: true.
 If customer does not exist, create it and set createdAt.
