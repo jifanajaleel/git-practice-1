@@ -24,8 +24,7 @@ router.get('/:id', customerControllers.getCustomerById);
 //     const id = req.params.id;
 //     const data = req.body;
 //     try {
-//         const result = await Customer.findByIdAndUpdate(id, data);
-//         const updatedData = await Customer.findById(id);
+//         const updatedData = await Customer.findByIdAndUpdate(id, data, { new: true });
 //         res.status(200).json(updatedData);
 //     } catch (error) {
 //         res.status(500).json({message: error.message});
@@ -36,7 +35,7 @@ router.get('/:id', customerControllers.getCustomerById);
 //     const id = req.params.id;
 //     try {
 //         const result = await Customer.findByIdAndDelete(id);
-//         res.status(200).json({message: "Deleted successfully"});
+//         res.status(200).json({message: "Deleted successfully", deletedCustomer: result});
 //     } catch (error) {
 //         res.status(500).json({message: error.message});
 //     }
