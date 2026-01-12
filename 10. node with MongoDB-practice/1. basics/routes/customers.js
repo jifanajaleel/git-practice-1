@@ -51,8 +51,9 @@ router.patch('/:id', async (req, res) => {
     const id = req.params.id;
     const data = req.body;
     try {
-        const result = await Customer.findByIdAndUpdate(id, data);
+        await Customer.findByIdAndUpdate(id, data);  // this'll just update the data in db & returns older data itself. That's why, this is not given into .json()
         const updatedData = await Customer.findById(id);
+        // const updatedData = await Customer.findByIdAndUpdate(id, data, { new: true });  // instead of using above 2 lines, you can use this single line of code
         res.status(200).json(updatedData);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -78,7 +79,7 @@ router.delete('/:id', async (req, res) => {
     const id = req.params.id;
     try {
         const result = await Customer.findByIdAndDelete(id);
-        res.status(200).json({message: "Deleted successfully"});
+        res.status(200).json({message: "Deleted successfully", deletedCustomer: result});
     } catch (error) {
         res.status(500).json({message: error.message});
     }
