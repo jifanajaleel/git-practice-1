@@ -1,4 +1,5 @@
 //! Handling relationship using mongoose
+//! Referencing
 
 const mongoose = require('mongoose');
 
@@ -42,3 +43,19 @@ module.exports = {
     Brand,
     Product
 };
+
+/*
+Referencing:
+------------
+*)Category and Brand are stored as separate collections
+*)Product only stores the ObjectId reference to Category and Brand
+*)Used when data is shared across multiple documents (one-to-many or many-to-many relationships)
+
+
+Why referencing in product.js:
+------------------------------
+*)A single Category can have many Products
+*)A single Brand can have many Products
+*)If embedding was used, the same category/brand data would be duplicated in every product document, wasting storage and making updates difficult
+*)Referencing avoids data duplication and maintains data consistency
+*/
