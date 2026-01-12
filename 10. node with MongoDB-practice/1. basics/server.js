@@ -26,4 +26,3 @@ app.use('/api/customers', customerRoutes);
 app.listen(PORT, () => {
     console.log("Server is waiting for requests. Port:", PORT);
 })
-
