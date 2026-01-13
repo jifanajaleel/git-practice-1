@@ -118,7 +118,7 @@ o/p ->
 *)To insert data.
 db.<collection_name>.insertOne({})
 Give below command where 'customers' is the Collection name. JSON-like JS object to be inserted is {name: "Jifana"}. It'll be stored as BSON.
-db.customers.insertOne({name: "Jifana})
+db.customers.insertOne({name: "Jifana"})
 o/p will be ->
     {
         acknowledged: true,
@@ -284,6 +284,8 @@ $gte -> greater than or equal to
 $lte -> less than or equal to
 $in -> in
 $nin -> not in
+$exists
+/ana/ OR /^ana/
 *)To get the array of objects where place is either Kannur or Kozhikode
 db.customers.find({place: {$in: ["Kannur", "Kozhikode"]}})
 o/p ->
@@ -435,15 +437,24 @@ o/p ->
 
 
 *)
-updateOne / updateMany:
-+------------------------+----------------------------------+
-| WHERE conditions       |  UPDATE conditions               |
-+------------------------+----------------------------------+
-| $eq, $neq              |    $set, $unset, $setOnInsert    |
-| $in, $nin              |    $min, $max                    |
-| $exists                |    $inc                          |
-| $gt, $gte, $lt, $lte   |    $rename                       |
-+------------------------+----------------------------------+
+
++-----------------------------+----------------------------------+----------------------------+
+|WHERE conditions filter      |  UPDATE conditions               | functions used with find() |
+|in find/insert/update/delete |  		                 |			      |
++-----------------------------+----------------------------------+----------------------------+
+| $eq, $neq                   |    $set, $unset, $setOnInsert    | sort()		      |
+| $in, $nin           	      |    $min, $max                    | skip()		      |
+| $exists              	      |    $inc                          | limit()		      |
+| $gt, $gte, $lt, $lte 	      |    $rename                       | count()		      |
+| $/an/, $/^an/               |                                  |		              |
++-----------------------------+----------------------------------+----------------------------+
+
+Examples:
+---------
+db.customers.find({<WHERE_condition_filter>}, {fields_required})
+db.customers.insertMany([{<document1>}, {<document2>}])
+db.customers.updateMany({<WHERE_condition_filter>}, {UPDATE_condition}, {<upsert: true or false>})
+db.customers.deleteMany({<WHERE_condition_filter>})
 
 *)To update place field in the object where 'name' is 'Jumana'. The first curly braces is for finding the data & 2nd braces is for updation condition.
 Note that 'updateOne' will only update 1 record where 'name' is matching with 'Jumana'.
