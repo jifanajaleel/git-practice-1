@@ -43,11 +43,11 @@
       }
 
       /* *************** GLOBAL VARIABLE & LOCAL VARIABLE ******************** */
-      var sum = 0; //! global variable
+      var total = 0; //! global variable
       function sumNumbers() {
         var n1 = parseInt(document.getElementById("number").value); //! local variable
-        sum = sum + n1;
-        document.getElementById("sum").innerText = "Sum is : " + sum;
+        total = total + n1;
+        document.getElementById("sum").innerText = "Sum is : " + total;
       }
 
       /* ********************* TERNARY OPERATION ************************ */
@@ -69,6 +69,7 @@
         default:
           phoneCode = "";
       }
+      console.log(phoneCode);
 
       //! switch case without break. It is used only intentionally, not common
       let day = 5;
@@ -142,11 +143,11 @@
       }
 
       /* *********************** DO WHILE loop **************************** */
-      //! 'do' will get executed once for sure. The repeted execution depends upon 'while' condition
+      //! 'do' will get executed once for sure. The repeated execution depends upon 'while' condition
       console.log("do-while loop example:");
       do {
         console.log("Current time:", new Date());
-        // var option = prompt("Do you want to continue?");
+        var option = prompt("Do you want to continue?");
       } while(option == "y")
     </script>
   </body>
