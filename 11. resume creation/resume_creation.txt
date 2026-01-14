@@ -1,0 +1,119 @@
+RESUME Preparation:
+--------------------
+
+Are the CV & Resume the same?
+Resume used for a specific job application. CV is more detailed
++---------------------------------------------------------+----------------------------------------------------+
+|         		CV      	   		  |      		  Resume		       |
++---------------------------------------------------------+----------------------------------------------------+
+| More than 2 pages					  | Max 2 pages					       |
+| Used for academic purposes				  | Used to apply for jobs			       |
++---------------------------------------------------------+----------------------------------------------------+
+
+*)Contents of a resume:
+1. Name
+2. Subtitle (eg: frontend developer)
+3. Contact details
+4. Experience
+5. Projects (summarize and add project link too)
+6. Skills (eg: html, js, version control, git)
+7. Education (b-tech)
+8. Certifications
+9. Social media presence (eg: linkedIn, github)
+10.Objective/summary
+
+*)Use Keywords used in job description
+
+*)Place the most impressive things about you at the Top of the Resume
+
+*)Preferred location can be added
+
+*)If you don't have much Experience, add your Projects instead:
+1. What have you done(use action words like managed, initiated, collaborated etc along with Project name)?
+2. How did you do that (technologies, softwares used)?
+3. What's the impact?
+
+*)Add LinkedIn profile, GitHub profile, Personal website
+
+*)Add details in Reverse Chronological order - Last course / experience as first
+
+*)Avoid mistakes
+
+*)Keep it simple. Don't use many fonts/colors. Font size -> 10-12pt for normal text & 14-16pt for section header. Use PDF format. Don't have to put photo or DOB in resume
+
+*)Tools/resources used to create a resume:
+1. Microsoft word
+2. https://flowcv.com/   (you'll have to create an account in it. Only 1 resume can be created. To create more, we should pay. But you can update on the same resume itself)
+
+*)NAME you resume. eg:
+Jifana Jaleel-Resume.pdf
+Jifana Jaleel-Backend developer-Resume.pdf
+
+*)Best time to apply for a job
+1. Time - 6-10am
+2. 1-4 days after the job post
+
+check resume_example.png
+
+*)Emailing a job application:
+1. Subject: Applying for [job position] - your name
+2. Body - Cover letter. It's a one-page document that you submit as part of your job application (along with CV or resume). Its purpose is to introduce you and briefly summarize your
+professional background. Customize acc to job description (use chatgpt)
+3. Signature (your name & contact)
+
+check email_example.png & email_example2.png
+
+
+GitHub Account for Job:
+------------------------
+*)In GitHub, you can create a repo with name as Jifana Jaleel and then maintain only 1 file Readme.md where you can add your details just like you add in a resume. This GitHub link can be
+attached in your resume, just like how you mention LinkedIn profile link.
+https://github.com/jifanajaleel will be your GitHub link where your resume kind of page will be displayed first.
+
+1. Github Readme Generator: https://rahuldkjain.github.io/gh-profile-readme-generator/
+2. Github Profile Readme Generator:https://profile-readme-generator.com/
+3. Github Repo with all cool Portfolio: https://github.com/abhisheknaiidu/awesome-github-profile-readme
+
+
+How to use LinkedIn Efficiently:
+---------------------------------
+*)High quality profile pic & cover photo. 
+1. You can use pfpmaker.com to set profile pic
+2. You can use canva.com to set cover photo
+
+*)Headline = Title + Value.
+eg:
+Frontend Developer | React, Angular | JavaScript
+Frontend Developer | Passionate about Web development
+Frontend Developer at Kiebot learning solutions
+Backend Developer | NodeJS | MongoDB
+Full Stack Developer | MERN
+
+*)Keywords in About section:
+Take help from google or chatgpt
+
+*)Add 5 skills correctly:
+Get endorsement from friends & colleagues
+
+*)Use custom LinkedIn URL
+
+*)Add up to date industry & location
+
+*)Add education & experience
+
+*)Add projects & links
+
+*)Connect with 50+ people
+
+*)Add open to work tag
+
+*)Apply for a job on a daily basis. Apply 10 jobs a day. Use linkedin features to get early notifications
+
+*)Search 'Hiring job role'. eg: hiring frontend developer
+
+*)Check linkedin_mssg_template.png
+
+*)Upload your resume
+
+
+Create accounts in Indeed & Naukri.
