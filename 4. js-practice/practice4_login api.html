@@ -1,3 +1,4 @@
+<!-- This HTML file demonstrates authentication and authorization using tokens in a web application. Here's how it works: -->
 <!DOCTYPE html>
 <html>
   <head></head>
@@ -36,13 +37,16 @@
             var data = await response.json();
             console.log("Created:", data);
         }
+
+        // login() function purpose: Authenticates the user and stores the authentication token
         async function login() {
             localStorage.removeItem("authToken");  //! sessionStorage can be removed exactly like this
             var payload = {
-                username: document.getElementById("username").value.trim(),  //! kminchelle
-                password: document.getElementById("password").value.trim()  //! 0lelplR            
+                username: document.getElementById("username").value.trim(),  //! emilys
+                password: document.getElementById("password").value.trim(),  //! emilyspass
+                expiresInMins: 30  // optional, defaults to 60
             }
-            console.log(JSON.stringify(payload))
+            console.log("Payload:", JSON.stringify(payload))
             var response = await fetch('https://dummyjson.com/auth/login',{
                 method: "POST",
                 headers: {
@@ -50,16 +54,22 @@
                 },
                 body: JSON.stringify(payload)
             });
+
+            console.log("Response:", response);
+            console.log("Response status:", response.status);
+            var data = await response.json();
+            console.log("Response data:", data);
+
             if (response.status == 200) {
-                var data = await response.json();
                 console.log("Success");
-                // console.log(response, data);
-                localStorage.setItem("authToken", data.token);  //! sessionStorage can be set exactly like this
+                localStorage.setItem("authToken", data.accessToken);  //! DummyJSON returns 'accessToken', not 'token'. sessionStorage can be set exactly like this
                 // var token = localStorage.getItem("authToken");  //! This is just an example for getItem usage. sessionStorage can be set exactly like this
-                document.cookie = "authToken=" + data.token + "; expires=Thu, 15 Dec 2030 12:00:00 UTC";
+                document.cookie = "authToken=" + data.accessToken + "; expires=Thu, 15 Dec 2030 12:00:00 UTC";
+                document.getElementById("errorMessage").innerText = "";
+                console.log("Token stored:", data.accessToken);
             } else {
-                document.getElementById("errorMessage").innerText = "Invalid credentials";
-            };         
+                document.getElementById("errorMessage").innerText = "Invalid credentials: " + (data.message || "Unknown error");
+            };
         }
     </script>
   </body>
