@@ -42,7 +42,7 @@ app.use(express.static("public"));  // this is a middleware
 Configuring static files directory in nodejs:
 ---------------------------------------------
 All files inside public folder will be considered as static files. Default port mentioned in env file is 5000
-1. if you run this practice12_db code and load http://localhost:5000/index.html in browser, you could see the index.html running there. If you comment above line, http://localhost:5000/index.html will be be error
+1. if you run this js code and load http://localhost:5000/index.html in browser, you could see the index.html running there. If you comment above line, http://localhost:5000/index.html will be be error
 2. load http://localhost:5000/baby.jpg
 */
 
