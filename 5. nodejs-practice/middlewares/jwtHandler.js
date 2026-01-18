@@ -17,7 +17,7 @@ const verifyTokenHandler = async (req, res, next) => {  // this function returns
         const userid = result.userid;
         req.userid = userid;  // attaching userid to req and then passes to next operation
         console.log(req.userid);
-        return next();  // Now all next controllers can access it
+        return next();  // Now all next controllers can access it. Here Control moves to the next middleware/controller. Wthout next(), control will not move to next middleware/controller
     } catch (error) {
         return res.status(401).json({ message: "Invalid token" });
     }
@@ -30,6 +30,12 @@ const verifyTokenHandler = async (req, res, next) => {  // this function returns
     res.status(401).json({ message: "No token provided" });
   }
 };
+/*
+Request → verifyTokenHandler (validates token, adds userid to req) 
+       → next() called 
+       → Your Route Handler (can access req.userid)
+This is the standard Express middleware pattern where each middleware either responds to the client OR calls next() to continue the chain.
+*/
 
 // below middleware is to check role
 const verifyRoles = (roles) => {  // roles is an array. eg: ["admin", "user"]
