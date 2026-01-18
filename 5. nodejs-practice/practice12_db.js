@@ -59,7 +59,7 @@ For users table:
 */
 
 /*
-Logic begind server operation:
+Logic behind server operation:
 1. server app is created
 2. logic is implemented using router
 3. server app listens & opens port
